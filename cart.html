@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | African’s Tenacity Trounce</title>
+    <link rel="stylesheet" href="black.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="black.html" class="brand-name">African’s Tenacity Trounce</a>
+        <div class="hamburger" id="mobile-menu-btn"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        <ul class="nav-links" id="nav-links-container">
+            <li><a href="black.html">Home</a></li>
+            <li><a href="winery-page.html">Winery</a></li>
+            <li><a href="Clothing-page.html">Clothing</a></li>
+            <li><a href="cart.html" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>Your <span class="gold-text">Selection</span></h1>
+    </header>
+
+    <section class="cart-section">
+        <div class="cart-container">
+            <div id="cart-items-list"></div>
+
+            <div class="cart-summary">
+                <h3>Total Estimate</h3>
+                <div class="total-price" id="cart-total">$0.00</div>
+                <button    id="checkout-btn"  class="checkout-btn" >Proceed to Checkout</button>
+                <a href="winery-page.html" class="continue-link">Continue Shopping</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="data.js"></script>
+    <script src="black.js"></script>
+    <script>
+    // --- CART PAGE LOGIC ---
+    const cartList = document.getElementById('cart-items-list');
+    const totalDisplay = document.getElementById('cart-total');
+
+    if (cart.length === 0) {
+        cartList.innerHTML = "<div style='text-align:center; padding:40px; color:#666;'>Your cart is empty. <br><br> <a href='winery-page.html' style='color:var(--color-gold)'>Start Shopping</a></div>";
+        totalDisplay.innerText = "$0.00";
+    } else {
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'cart-item';
+            
+            // WE ADDED THE QUANTITY CONTROLS HERE
+            itemDiv.innerHTML = `
+                <div class="cart-img" style="background-image: url('${item.image}')"></div>
+                
+                <div class="cart-details">
+                    <h4>${item.name}</h4>
+                    <p class="unit-price">Unit Price: $${item.price.toFixed(2)}</p>
+                    
+                    <div class="qty-control">
+                        <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+                        <span class="qty-number">${item.quantity}</span>
+                        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                    </div>
+                </div>
+
+                <div class="cart-actions">
+                    <p class="item-total-price">$${itemTotal.toFixed(2)}</p>
+                    <button class="remove-text-btn" onclick="removeFromCart(${index})">Remove</button>
+                </div>
+            `;
+            cartList.appendChild(itemDiv);
+        });
+
+        totalDisplay.innerText = "$" + total.toFixed(2);
+    }
+</script>
+</body>
+</html>

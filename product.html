@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail | African’s Tenacity Trounce</title>
+    <link rel="stylesheet" href="black.css">
+    
+    <style>
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+        }
+        #toast.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        @-webkit-keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @-webkit-keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="black.html" class="brand-name">African’s Tenacity Trounce</a>
+    <li>
+         <a href="cart.html" class="cart-link">
+        Cart (<span id="cart-count">0</span>)
+         </a>
+    </li>
+    
+    <div class="hamburger" id="mobile-menu-btn">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+    <ul class="nav-links" id="nav-links-container">
+        <li><a href="black.html">Home</a></li>
+        
+        <li class="dropdown-parent">
+            <a href="javascript:void(0)" class="drop-trigger">About ▾</a>
+            <ul class="dropdown-content">
+                <li><a href="black.html#motivation">Mentality & Motivation</a></li>
+                <li><a href="winery-page.html">Winery Collection</a></li>
+                <li><a href="Clothing-page.html">Clothing & Attire</a></li>
+            </ul>
+        </li>
+        <li><a href="cart.html">Cart</a></li>
+
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+    <div id="toast"></div>
+
+    <section class="product-detail-section">
+        <div class="product-layout">
+            
+            <div class="product-image-container">
+                <div id="p-image" class="detail-image-placeholder"></div>
+            </div>
+
+            <div class="product-info-container">
+                <p class="breadcrumbs">Collection / <span id="p-category">...</span></p>
+                <h1 id="p-name">Loading...</h1>
+                <h2 id="p-price" class="gold-text">$0.00</h2>
+                
+                <p id="p-summary" class="lead-text">...</p>
+
+                <div class="divider"></div>
+
+                <h3>The History</h3>
+                <p id="p-history" class="detail-text">...</p>
+
+                <h3>Inspiration & Founder</h3>
+                 <p id="p-founder" class="detail-text">...</p>
+
+                <button class="cta-btn full-width">Loading Price...</button>
+                
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews-section">
+        <h3>Client Reviews</h3>
+        <div id="reviews-container">
+            </div>
+    </section>
+
+    <script src="data.js"></script>
+    <script src="black.js"></script>
+    <script>
+        // --- 2. TOAST FUNCTION (Added this) ---
+        function showToast(productName) {
+            var x = document.getElementById("toast");
+            // Set text: Use product name if provided, else default
+            x.innerText = productName ? productName + " added to cart!" : "Item added to cart!";
+            x.className = "show";
+            
+            // Remove the 'show' class after 3 seconds
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+
+        // --- THE LOGIC ENGINE ---
+        
+        // 1. Get the URL Parameter (e.g., ?id=wine_001)
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id');
+
+        // 2. Search the "Database" for this ID
+        const product = inventory.find(item => item.id === productId);
+
+        // 3. If found, update the HTML Page
+            if (product) {
+            // 1. Fill Text Data
+            document.getElementById('p-name').innerText = product.name;
+            document.getElementById('p-price').innerText = "$" + product.price.toFixed(2);
+            document.getElementById('p-category').innerText = product.category.toUpperCase();
+            document.getElementById('p-summary').innerText = product.summary;
+            document.getElementById('p-history').innerText = product.history;
+            document.getElementById('p-founder').innerText = "Founder: " + product.founder;
+            
+            // 2. Set Image
+            document.getElementById('p-image').style.backgroundImage = `url('${product.image}')`;
+            document.getElementById('p-image').style.backgroundSize = "cover";
+
+            // --- 3. THE BUTTON FIX ---
+            const addToCartBtn = document.querySelector('.cta-btn');
+            
+            // Show price in button text
+            addToCartBtn.innerText = `Add to Order - $${product.price}`;
+            
+            // ATTACH BOTH FUNCTIONS:
+            // We use .replace() on the name to safely handle quotes (e.g., "Men's Suit")
+            const safeName = product.name.replace(/'/g, "\\'");
+            addToCartBtn.setAttribute('onclick', `addToCart('${product.id}'); showToast('${safeName}');`);
+            // -------------------------
+
+            // 4. Reviews
+            const reviewContainer = document.getElementById('reviews-container');
+            if(product.reviews.length > 0) {
+                product.reviews.forEach(review => {
+                    let reviewCard = document.createElement('div');
+                    reviewCard.className = "review-card";
+                    reviewCard.innerHTML = `<strong>${review.user}</strong><p>"${review.text}"</p>`;
+                    reviewContainer.appendChild(reviewCard);
+                });
+            } else {
+                reviewContainer.innerHTML = "<p>No reviews yet. Be the first.</p>";
+            }
+
+        } else {
+            document.querySelector('.product-layout').innerHTML = "<h1>Product not found.</h1>";
+        }
+    </script>
+</body>
+</html>

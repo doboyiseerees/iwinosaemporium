@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailored & Traditional | African’s Tenacity Trounce</title>
+    <link rel="stylesheet" href="black.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="black.html" class="brand-name">African’s Tenacity Trounce</a>
+    
+    <div class="hamburger" id="mobile-menu-btn">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+    <ul class="nav-links" id="nav-links-container">
+        <li><a href="black.html">Home</a></li>
+        
+        <li class="dropdown-parent">
+            <a href="javascript:void(0)" class="drop-trigger">About ▾</a>
+            <ul class="dropdown-content">
+                <li><a href="black.html#motivation">Mentality & Motivation</a></li>
+                <li><a href="winery-page.html">Winery Collection</a></li>
+                <li><a href="Clothing-page.html">Clothing & Attire</a></li>
+            </ul>
+        </li>
+        <li>
+    <a href="cart.html" class="cart-link">
+        Cart (<span id="cart-count">0</span>)
+    </a>
+</li>
+        
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+    <header class="page-header">
+        <h1>Sartorial <span class="gold-text">Elegance</span></h1>
+        <p>From the streets of Milan to the Palace of the Oba.</p>
+    </header>
+
+    <section class="catalog-section">
+        <div id="clothing-grid" class="product-grid"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 African’s Tenacity Trounce.</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="black.js"></script>
+    <script>
+        // 1. Select Container
+        const gridContainer = document.getElementById('clothing-grid');
+
+        // 2. Filter ONLY clothing
+        const clothes = inventory.filter(item => item.category === 'clothing');
+        const accessories = inventory.filter(item => item.category === 'accessories');
+        
+
+        // 3. Generate HTML
+        clothes.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'catalog-card fashion-card'; // Note extra class: fashion-card
+
+            card.innerHTML = `
+                <div class="card-image fashion-image" style="background-image: url('${item.image}'); background-size: cover; background-position: center;"></div>
+                <div class="card-info">
+                    <h3>${item.name}</h3>
+                    <p class="card-summary">${item.summary}</p>
+                    <div class="card-footer">
+                        <span class="price">$${item.price.toFixed(2)}</span>
+                        <a href="product.html?id=${item.id}" class="view-btn">View Fit</a>
+                    </div>
+                </div>
+            `;
+            gridContainer.appendChild(card);
+        });
+
+        if (clothes.length === 0) {
+            gridContainer.innerHTML = "<p>The tailor is currently busy.</p>";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentality & Motivation</title>
+    <link rel="stylesheet" href="black.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="black.html" class="brand-name">African’s Tenacity Trounce</a>
+        <div class="hamburger" id="mobile-menu-btn">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="nav-links" id="nav-links-container">
+            <li><a href="black.html">Home</a></li>
+            <li class="dropdown-parent">
+                <a href="javascript:void(0)" class="drop-trigger">About ▾</a>
+                <ul class="dropdown-content">
+                    <li><a href="motivation-page.html">Mentality & Motivation</a></li>
+                    <li><a href="winery-page.html">Winery Collection</a></li>
+                    <li><a href="Clothing-page.html">Clothing & Attire</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>Voices of <span class="gold-text">Resilience</span></h1>
+    </header>
+
+    <section class="motivation-section">
+        <div id="motivation-grid" class="heroes-grid">
+            <p style="color: red; text-align: center;">Loading data... if this stays here, check data.js!</p>
+        </div>
+    </section>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        // --- IN-PAGE LOGIC ---
+        console.log("Motivation Page Loaded");
+
+        // 1. Check if Inventory exists
+        if (typeof inventory === 'undefined') {
+            document.getElementById('motivation-grid').innerHTML = 
+                "<h2 style='color:red'>ERROR: data.js is broken or not loaded. Check for missing commas!</h2>";
+        } else {
+            // 2. Filter Data
+            const heroes = inventory.filter(item => item.category === 'motivation');
+            console.log("Found heroes:", heroes.length);
+
+            const heroGrid = document.getElementById('motivation-grid');
+            
+            // Clear the "Loading..." text
+            heroGrid.innerHTML = ""; 
+
+            if (heroes.length === 0) {
+                 heroGrid.innerHTML = "<h2>No motivation items found in database. Check category spelling ('motivation').</h2>";
+            }
+
+            // 3. Render
+            heroes.forEach(hero => {
+                const card = document.createElement('div');
+                card.className = 'hero-card';
+                card.innerHTML = `
+                    <div class="hero-image-container">
+                        <img src="${hero.image}" alt="${hero.name}" class="hero-img">
+                    </div>
+                    <div class="hero-content">
+                        <h2 class="hero-name">${hero.name}</h2>
+                        <h4 class="hero-role gold-text">${hero.role}</h4>
+                        <blockquote class="hero-quote">"${hero.quote}"</blockquote>
+                        <p class="hero-history">${hero.history}</p>
+                    </div>
+                `;
+                heroGrid.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>

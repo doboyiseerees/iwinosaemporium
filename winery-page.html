@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Winery Collection | African’s Tenacity Trounce</title>
+    <link rel="stylesheet" href="black.css">
+</head>
+<body>
+
+    <nav class="navbar">
+    <a href="black.html" class="brand-name">African’s Tenacity Trounce</a>
+    
+    <div class="hamburger" id="mobile-menu-btn">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+    <ul class="nav-links" id="nav-links-container">
+        <li><a href="black.html">Home</a></li>
+        
+        <li class="dropdown-parent">
+            <a href="javascript:void(0)" class="drop-trigger">About ▾</a>
+            <ul class="dropdown-content">
+                <li><a href="black.html#motivation">Mentality & Motivation</a></li>
+                <li><a href="winery-page.html">Winery Collection</a></li>
+                <li><a href="Clothing-page.html">Clothing & Attire</a></li>
+            </ul>
+        </li>
+        <li>
+    <a href="cart.html" class="cart-link">
+        Cart (<span id="cart-count">0</span>)
+    </a>
+     </li>
+        
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+    <header class="page-header">
+        <h1>The <span class="gold-text">Reserve</span> Collection</h1>
+        <p>Curated vintages inspired by the richness of the Benin Kingdom.</p>
+    </header>
+
+    <section class="catalog-section">
+        <div id="wine-grid" class="product-grid"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 African’s Tenacity Trounce.</p>
+    </footer>
+
+     <script src="data.js"></script>
+     <script src="black.js"></script>
+    <script>
+        // --- ENGINEER LOGIC ---
+
+        // 1. Select the container
+        const gridContainer = document.getElementById('wine-grid');
+
+        // 2. Filter data to get ONLY wines
+        const wines = inventory.filter(item => item.category === 'wine');
+
+        // 3. Loop through wines and generate HTML
+        wines.forEach(wine => {
+            // Create the card div
+            const card = document.createElement('div');
+            card.className = 'catalog-card';
+
+            // Fill the card with data
+            card.innerHTML = `
+                <div class="card-image" style="background-image: url('${wine.image}'); background-size: cover; background-position: center;"></div>
+                <div class="card-info">
+                    <h3>${wine.name}</h3>
+                    <p class="card-summary">${wine.summary}</p>
+                    <div class="card-footer">
+                        <span class="price">$${wine.price.toFixed(2)}</span>
+                        <a href="product.html?id=${wine.id}" class="view-btn">View Profile</a>
+                    </div>
+                </div>
+            `;
+
+            // Inject into the grid
+            gridContainer.appendChild(card);
+        });
+
+        // Optional: If no wines found
+        if (wines.length === 0) {
+            gridContainer.innerHTML = "<p>The cellar is currently being restocked.</p>";
+        }
+    </script>
+</body>
+</html>

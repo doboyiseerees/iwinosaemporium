@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | African Tenacity</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            
+            background-color: #111; color: #fff; font-family: 'Helvetica Neue', sans-serif;
+            display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;
+        }
+        .checkout-card {
+            background: #1a1a1a; padding: 40px; border-radius: 10px; border: 1px solid #333;
+            text-align: center; max-width: 400px; width: 100%;
+        }
+        h2 { color: #d4af37; margin-bottom: 10px; }
+        .product-image { width: 100px; height: 100px; background: #333; margin: 20px auto; border-radius: 50%; }
+        .price { font-size: 24px; font-weight: bold; margin: 20px 0; }
+        #checkout-button {
+            background-color: #d4af37; color: #000; padding: 15px 30px; font-size: 16px;
+            border: none; cursor: pointer; font-weight: bold; width: 100%; border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        #checkout-button:hover { transform: scale(1.02); background-color: #b59025; }
+        /* Add this inside your <style> tag */
+@media (max-width: 480px) {
+    body {
+        /* Align to top so keyboard doesn't hide input */
+        align-items: flex-start; 
+        padding-top: 50px;
+    }
+    .checkout-card {
+        width: 90%; /* Use 90% of the screen width */
+        padding: 20px; /* Less padding on mobile */
+        margin: 0 auto;
+        border: none; /* Cleaner look on mobile */
+    }
+    .price {
+        font-size: 20px; /* Slightly smaller text */
+    }
+}
+    </style>
+</head>
+<script>
+    // Check if the user is logged in
+    const user = localStorage.getItem('user');
+
+    if (!user) {
+        // If no user is found, kick them back to the login page
+        alert("You must sign in to access Premium Membership.");
+        window.location.href = "login.html";
+    }
+</script>
+<body>
+    
+
+    <div class="checkout-card">
+        <div class="product-image"></div>
+        <h2>Premium Membership</h2>
+        <p>Unlock the Winery & Clothing Collection</p>
+        <div class="price">$81.00</div>
+        
+        <button id="checkout-btn">Proceed to Payment</button>
+    </div>
+
+    <script>
+        // --- PASTE YOUR PUBLISHABLE KEY HERE ---
+        const stripe = Stripe('pk_test_51SkRSLF4PldbqlsvtOZyPz8QULNT0fZKJoIqQxCWkjW7wFcRiDhUONHKQWVv2MM9cm96vUEvr0R3yn8JTSq1pbQb008x2ORLLn'); 
+
+        const checkoutButton = document.getElementById('checkout-button');
+
+        checkoutButton.addEventListener('click', () => {
+            // Tell the server to start a session
+            fetch('/create-checkout-session', {
+                method: 'POST',
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(session) {
+                // Redirect to Stripe's secure checkout page
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(function(result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
