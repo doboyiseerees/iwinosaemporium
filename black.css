@@ -1,22 +1,14 @@
-/* =========================================
-   1. VARIABLES & RESET
-   ========================================= */
+/* --- VARIABLES & RESET --- */
 :root {
-    /* Color Palette (60-30-10 Rule) */
-    --color-bg: #0d0d0d;           /* Deep Off-Black */
-    --color-text: #f5f5f7;         /* Apple Off-White */
-    --color-text-muted: #a1a1a6;   /* Secondary Grey */
-    --color-gold: #d4af37;         /* Metallic Gold */
-    --color-gold-dim: #aa8c2c;     /* Darker Gold (Hover) */
-    --color-card: #1c1c1e;         /* Dark Grey Cards */
-    --color-danger: #ff453a;       /* iOS Red */
-
-    /* Typography */
-    --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --font-mono: 'Courier New', monospace;
+    /* 60-30-10 Rule Colors */
+    --color-bg: #0d0d0d;        /* Deep Off-Black (Easier on eyes than pure #000) */
+    --color-text: #f5f5f7;      /* Apple-style Off-White */
+    --color-gold: #d4af37;      /* Metallic Gold */
+    --color-gold-dim: #aa8c2c;  /* Darker Gold for hover states */
+    --color-card: #1c1c1e;      /* Dark Grey for cards */
     
-    /* Transitions */
-    --transition-fast: 0.3s ease;
+    /* Apple-System Font Stack */
+    --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -30,33 +22,44 @@ body {
     color: var(--color-text);
     font-family: var(--font-main);
     line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased; /* Critical for Apple-like text */
 }
 
-/* Typography Defaults */
-h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
-h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-p { color: var(--color-text-muted); font-weight: 400; }
-a { text-decoration: none; color: inherit; transition: var(--transition-fast); }
-ul { list-style: none; }
-img { max-width: 100%; display: block; }
+/* --- TYPOGRAPHY --- */
+h1, h2, h3 {
+    font-weight: 600;
+    letter-spacing: -0.02em; /* Apple-style tight tracking */
+}
 
-.gold-text { color: var(--color-gold); }
-.section-header { text-align: center; margin-bottom: 40px; padding: 0 20px; }
-section { padding: 80px 5%; border-bottom: 1px solid #222; }
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
 
-/* =========================================
-   2. NAVIGATION BAR (Glassmorphism)
-   ========================================= */
+p {
+    color: #a1a1a6; /* Apple grey text for secondary info */
+    font-weight: 400;
+}
+
+.gold-text {
+    color: var(--color-gold);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+/* --- NAVIGATION --- */
+/* --- NAVIGATION BAR (REDEFINED) --- */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 5%;
-    background: rgba(13, 13, 13, 0.95);
+    background: rgba(13, 13, 13, 0.95); /* Dark Glass */
     backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -64,46 +67,61 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
 }
 
 .brand-name {
+    text-decoration: none;
     color: var(--color-text);
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     letter-spacing: -0.5px;
 }
 
-/* Desktop Links */
+/* DESKTOP LINKS */
 .nav-links {
+    list-style: none;
     display: flex;
     gap: 40px;
     align-items: center;
 }
 
 .nav-links a {
-    color: var(--color-text-muted);
+    text-decoration: none;
+    color: #a1a1a6; /* Apple Grey */
     font-size: 0.9rem;
-    position: relative;
+    transition: color 0.3s ease;
 }
 
-.nav-links a:hover { color: var(--color-text); }
+.nav-links a:hover {
+    color: var(--color-text); /* White on hover */
+}
 
-/* --- Dropdown Logic (Desktop) --- */
+/* DROPDOWN LOGIC (DESKTOP) */
 .dropdown-parent {
     position: relative;
-    padding: 10px 0;
+    padding: 10px 0; /* Increases hover area so menu doesn't disappear */
 }
 
 .dropdown-content {
-    display: none;
+    display: none; /* Hidden by default */
     position: absolute;
-    top: 100%;
+    top: 100%; /* Push it below the parent */
     left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--color-card);
+    transform: translateX(-50%); /* Center it */
+    background-color: #1c1c1e; /* Card Color */
     min-width: 220px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     border-radius: 8px;
-    border: 1px solid #333;
     padding: 10px 0;
-    z-index: 1001;
+    list-style: none;
+    border: 1px solid #333;
+}
+
+/* Show dropdown on hover */
+.dropdown-parent:hover .dropdown-content {
+    display: block;
+    animation: fadeIn 0.3s ease; /* Smooth entrance */
+}
+
+.dropdown-content li {
+    padding: 0;
 }
 
 .dropdown-content a {
@@ -117,15 +135,7 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
     color: var(--color-gold);
 }
 
-/* Show on Hover (Desktop Only) */
-@media (min-width: 769px) {
-    .dropdown-parent:hover .dropdown-content {
-        display: block;
-        animation: fadeIn 0.3s ease;
-    }
-}
-
-/* --- Hamburger Menu --- */
+/* HAMBURGER ICON (Hidden on Desktop) */
 .hamburger {
     display: none;
     cursor: pointer;
@@ -137,73 +147,149 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
     width: 25px;
     height: 2px;
     background-color: var(--color-text);
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
 }
 
-/* =========================================
-   3. MOBILE RESPONSIVENESS (NAVBAR)
-   ========================================= */
+/* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
-    .hamburger { display: flex; }
+    
+    /* Show Hamburger */
+    .hamburger {
+        display: flex;
+    }
 
+    /* Hide Links initially */
     .nav-links {
         position: absolute;
-        top: 60px; /* Below navbar */
+        top: 60px; /* Below the navbar */
         left: 0;
         width: 100%;
-        background-color: var(--color-bg);
-        flex-direction: column;
+        background-color: #0d0d0d;
+        flex-direction: column; /* Stack vertically */
         align-items: center;
         gap: 0;
-        max-height: 0;
+        max-height: 0; /* Hidden height */
         overflow: hidden;
-        transition: max-height 0.4s ease-out;
+        transition: max-height 0.4s ease-out; /* Smooth Slide Down */
         border-bottom: 1px solid #333;
     }
 
-    .nav-links.active { max-height: 600px; opacity: 1; }
-
-    .nav-links li { width: 100%; text-align: center; border-bottom: 1px solid #222; }
-    .nav-links a { display: block; padding: 20px 0; width: 100%; }
-
-    /* --- MOBILE DROPDOWN FIX --- */
-    .dropdown-parent { width: 100%; }
-    
-    .dropdown-content {
-        position: static; /* Stack naturally */
-        transform: none;
-        display: none; /* Hidden by default */
-        width: 100%;
-        background-color: #151515; /* Slightly lighter to distinguish */
-        box-shadow: none;
-        border: none;
-        padding: 0;
+    /* This class is added by JavaScript when clicked */
+    .nav-links.active {
+        max-height: 500px; /* Enough height to show all links */
+        opacity: 1;
     }
 
-    /* JS Toggles this class */
-    .dropdown-parent.active .dropdown-content { display: block; }
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+        border-bottom: 1px solid #222;
+    }
+
+    /* Mobile Dropdown Fix */
+    .dropdown-parent:hover .dropdown-content {
+        display: none; /* Disable hover on mobile */
+    }
+    
+    .dropdown-content {
+        display: block; /* Always show sub-items in list for simplicity on mobile */
+        position: static; /* No absolute positioning */
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        transform: none;
+        padding-top: 10px;
+    }
     
     .dropdown-content a {
         font-size: 0.85rem;
         color: var(--color-gold);
-        padding: 15px 0;
-        border-bottom: 1px solid #333;
+        padding: 10px 0;
     }
 
-    /* Hamburger Animation */
-    .hamburger.active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.active .bar:nth-child(2) { opacity: 0; }
-    .hamburger.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    /* Hamburger Animation to 'X' */
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
 }
 
+/* Animation Keyframe */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
     to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-/* =========================================
-   4. HERO & CAROUSEL
-   ========================================= */
+.brand-name {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--color-text);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #a1a1a6;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--color-text);
+}
+
+/* DROPDOWN STYLING */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--color-card);
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+    z-index: 1;
+    border-radius: 8px;
+    padding: 10px 0;
+    top: 30px; /* Spacing */
+}
+
+.dropdown-content a {
+    color: var(--color-text);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #2c2c2e;
+    color: var(--color-gold);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* --- SECTIONS --- */
+section {
+    padding: 80px 0;
+    border-bottom: 1px solid #222;
+}
+
+/* HERO */
 .hero-section {
     height: 80vh;
     display: flex;
@@ -212,74 +298,106 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
     text-align: center;
     background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://source.unsplash.com/random/1920x1080/?luxury,black');
     background-size: cover;
-    background-position: center;
 }
 
-.hero-text-container h1 { font-size: 4rem; margin-bottom: 1rem; }
+.hero-text-container h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
 
-/* Carousel */
+/* --- CAROUSEL STYLING --- */
 .carousel-container {
     width: 90%;
     margin: 0 auto;
-    overflow-x: auto;
+    overflow-x: auto; /* Allows horizontal scroll */
     scroll-behavior: smooth;
     padding-bottom: 20px;
+    /* Hide scrollbar for cleaner look */
     -ms-overflow-style: none;  
     scrollbar-width: none;  
 }
-.carousel-container::-webkit-scrollbar { display: none; }
 
-.carousel-track { display: flex; gap: 20px; }
+.carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 20px;
+}
 
 .carousel-item {
     background: var(--color-card);
     min-width: 280px;
     border-radius: 12px;
     padding: 20px;
-    transition: var(--transition-fast);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
-    border: 1px solid #222;
 }
 
 .carousel-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.1);
-    border-color: var(--color-gold-dim);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.1); /* Subtle Gold Glow */
 }
 
 .item-image {
     width: 100%;
     height: 200px;
-    background-color: #333;
+    background-color: #333; /* Placeholder color */
     border-radius: 8px;
     margin-bottom: 15px;
-    object-fit: cover;
 }
 
-.price { color: var(--color-gold); font-weight: 600; margin: 5px 0; }
-.summary { font-size: 0.85rem; margin-bottom: 15px; color: #888; }
+.price {
+    color: var(--color-gold);
+    font-weight: 600;
+    margin: 5px 0;
+}
 
-/* Buttons */
+.summary {
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+/* --- PROFESSIONAL CTA BUTTON --- */
 .cta-btn {
+    /* 1. Gradient for depth */
     background: linear-gradient(135deg, var(--color-gold), #b8860b);
     color: #000;
+    
+    /* 2. Typography */
     font-size: 0.95rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.5px; /* Adds elegance */
+    
+    /* 3. Box Model */
     border: none;
-    border-radius: 4px;
+    border-radius: 4px; /* Slight rounding, not fully round */
     padding: 18px 30px;
     cursor: pointer;
+    
+    /* 4. Animation Physics */
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); /* Soft Gold Glow */
+    position: relative;
+    overflow: hidden;
 }
 
+/* Hover State: The Lift */
 .cta-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
-    background: linear-gradient(135deg, #ffd700, #daa520);
+    transform: translateY(-3px); /* Lifts up slightly */
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4); /* Glow gets stronger */
+    background: linear-gradient(135deg, #ffd700, #daa520); /* Brighter gold */
 }
+
+/* Active State: The Click */
+.cta-btn:active {
+    transform: translateY(1px); /* Pushes down slightly */
+    box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+}
+
+
 
 .order-btn {
     background: transparent;
@@ -288,7 +406,7 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
     padding: 8px 16px;
     border-radius: 20px;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
 }
 
 .order-btn:hover {
@@ -302,67 +420,27 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
     width: fit-content;
     margin: 30px auto 0;
     color: var(--color-gold);
+    text-decoration: none;
     font-size: 0.9rem;
 }
 
-/* =========================================
-   5. CATALOG / GRID SYSTEM
-   ========================================= */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 40px;
+.learn-more-btn:hover {
+    text-decoration: underline;
 }
 
-.catalog-card {
-    background-color: var(--color-card);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: var(--transition-fast);
-    border: 1px solid #222;
-    display: flex;
-    flex-direction: column;
+/* PLACEHOLDER COLORS FOR DEMO */
+.placeholder-wine { background: linear-gradient(45deg, #300, #500); }
+.placeholder-cloth { background: linear-gradient(45deg, #111, #333); }
+
+/* --- PRODUCT DETAIL PAGE --- */
+.product-detail-section {
+    padding: 100px 5%;
+    min-height: 80vh;
 }
 
-.catalog-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-    border-color: var(--color-gold-dim);
-}
-
-.catalog-card img {
-    width: 100%;
-    height: 350px; /* Fixed height for consistency */
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.5s ease;
-    display: block;
-}
-
-.catalog-card:hover img { transform: scale(1.05); }
-
-.card-info { padding: 20px; }
-.card-info h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--color-text); }
-.card-summary { font-size: 0.9rem; color: #888; margin-bottom: 20px; height: 40px; overflow: hidden; }
-
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    border-top: 1px solid #333;
-    padding-top: 15px;
-}
-
-/* Fashion Specific */
-.fashion-image { height: 450px !important; }
-
-/* =========================================
-   6. PRODUCT DETAILS & REVIEWS
-   ========================================= */
 .product-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
     gap: 60px;
     align-items: center;
 }
@@ -372,6 +450,46 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
     height: 500px;
     background: linear-gradient(135deg, #222, #444);
     border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.breadcrumbs {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.lead-text {
+    font-size: 1.2rem;
+    color: #ddd;
+    margin-bottom: 30px;
+}
+
+.detail-text {
+    color: #a1a1a6;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.divider {
+    height: 1px;
+    background-color: #333;
+    margin: 30px 0;
+}
+
+/* Helper Class for Product Page */
+.full-width {
+    width: 100%;
+    margin-top: 30px;
+    display: block; /* Ensures it behaves like a block element */
+}
+
+.reviews-section {
+    padding: 50px 5%;
+    background-color: #111;
+    border-top: 1px solid #222;
 }
 
 .review-card {
@@ -382,14 +500,167 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
     border-left: 3px solid var(--color-gold);
 }
 
+/* Mobile Responsiveness for Product Page */
 @media (max-width: 768px) {
-    .product-layout { grid-template-columns: 1fr; }
+    .product-layout {
+        grid-template-columns: 1fr; /* Stack vertically on phone */
+    }
 }
 
-/* =========================================
-   7. HEROES / MOTIVATION
-   ========================================= */
-.heroes-grid { display: flex; flex-direction: column; gap: 80px; }
+
+
+
+/* --- CATALOG / LIST PAGE STYLES --- */
+
+.page-header {
+    padding: 120px 20px 60px; /* Top padding clears the fixed navbar */
+    text-align: center;
+    background-color: #0d0d0d;
+}
+
+.catalog-section {
+    padding: 0 5% 100px; /* 5% side padding for breathing room */
+}
+
+/* THE GRID SYSTEM */
+.product-grid {
+    display: grid;
+    /* This magic line creates responsive columns automatically */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+/* THE CARD DESIGN */
+.catalog-card {
+    background-color: var(--color-card);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #222;
+    
+}
+
+/* --- UNIVERSAL CAROUSEL IMAGE FIX --- */
+
+/* 1. The Card Container (The Frame) */
+.card {
+    /* Existing styles... */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Cuts off anything that spills out */
+    border-radius: 10px; /* Optional: Rounded corners */
+    background-color: #1a1a1a; /* Background color if image loads slow */
+}
+
+/* 2. The Image Wrapper (Optional but recommended) */
+/* If your images are inside a div like <div class="card-image">...</div> */
+.card-image-container {
+    width: 100%;
+    height: 350px; /* SET A FIXED HEIGHT. This is crucial for alignment. */
+    overflow: hidden;
+    position: relative;
+}
+
+/* 3. The Image Itself (The Magic) */
+.card img {
+    width: 100%;       /* Force width to fill container */
+    height: 350px;     /* Force height to match container */
+    
+    /* THE GOLDEN RULE: */
+    object-fit: cover; 
+    
+    /* Centering */
+    object-position: center center;
+    
+    /* Smooth Transition for hover effects */
+    transition: transform 0.5s ease;
+    display: block; /* Removes tiny gap at bottom of images */
+}
+
+/* Optional: Slight Zoom on Hover */
+.card:hover img {
+    transform: scale(1.05);
+}
+.catalog-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    border-color: var(--color-gold-dim);
+}
+
+.card-image {
+    height: 250px;
+    width: 100%;
+    background-color: #333;
+    /* In future, use: background-image: url(...); background-size: cover; */
+    
+}
+
+.card-info {
+    padding: 20px;
+}
+
+.card-info h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: var(--color-text);
+}
+
+.card-summary {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 20px;
+    height: 40px; /* Fixed height keeps cards aligned even if text varies */
+    overflow: hidden;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    border-top: 1px solid #333;
+    padding-top: 15px;
+}
+
+.view-btn {
+    text-decoration: none;
+    color: var(--color-gold);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.view-btn:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* --- FASHION SPECIFIC STYLES --- */
+
+/* We make the image taller to show the full suit */
+.fashion-image {
+    height: 400px; /* Taller than the 250px wine image */
+    background: linear-gradient(180deg, #1a1a1a, #0d0d0d);
+}
+
+/* Optional: Make the card text align differently for fashion if desired */
+.fashion-card .card-info h3 {
+    font-weight: 300; /* Sleeker, more elegant font weight for fashion */
+    letter-spacing: 1px;
+}
+
+/* --- MOTIVATION / HEROES SECTION --- */
+
+.motivation-section {
+    padding: 0 10% 100px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.heroes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 80px; /* Big spacing between people */
+}
 
 .hero-card {
     display: flex;
@@ -397,37 +668,95 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid #222;
+    /* Smooth transition for hover effects */
     transition: transform 0.3s ease;
 }
 
-.hero-card:hover { transform: translateY(-5px); border-color: #333; }
-.hero-image-container { flex: 1; min-width: 300px; }
-.hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.hero-content { flex: 2; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+.hero-card:hover {
+    transform: translateY(-5px);
+    border-color: #333;
+}
+
+/* Image on the Left */
+.hero-image-container {
+    flex: 1; /* Takes up 1 part of space */
+    min-width: 300px; /* Don't get too small */
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the box without stretching */
+    display: block;
+}
+
+/* Text on the Right */
+.hero-content {
+    flex: 2; /* Takes up 2 parts of space (Double the image) */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-name {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    color: var(--color-text);
+}
+
+.hero-role {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
 
 .hero-quote {
-    font-family: serif;
+    font-family: serif; /* Makes it look like a quote */
     font-style: italic;
     font-size: 1.3rem;
     color: #e1e1e1;
     border-left: 3px solid var(--color-gold);
     padding-left: 20px;
     margin-bottom: 25px;
+    line-height: 1.6;
 }
 
+.hero-history {
+    color: #888;
+    line-height: 1.8;
+}
+
+/* --- MOBILE RESPONSIVENESS FOR HEROES --- */
 @media (max-width: 768px) {
-    .hero-card { flex-direction: column; }
-    .hero-image-container { height: 300px; }
-    .hero-content { padding: 30px 20px; }
+    .hero-card {
+        flex-direction: column; /* Stack image on top of text */
+    }
+
+    .hero-image-container {
+        height: 300px; /* Fixed height for image on mobile */
+    }
+    
+    .hero-content {
+        padding: 30px 20px;
+    }
+
+    .hero-name {
+        font-size: 1.5rem;
+    }
 }
 
-/* =========================================
-   8. LUXURY CART STYLES
-   ========================================= */
+/* --- CART PAGE STYLES --- */
+.cart-section {
+    padding: 0 5% 100px;
+}
+
 .cart-container {
     max-width: 800px;
     margin: 0 auto;
-    background-color: var(--color-card);
+    background-color: #1c1c1e;
     padding: 40px;
     border-radius: 12px;
     border: 1px solid #333;
@@ -436,121 +765,102 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
 .cart-item {
     display: flex;
     align-items: center;
-    padding: 25px 0;
+    padding: 20px 0;
     border-bottom: 1px solid #333;
-    flex-wrap: wrap; 
 }
 
 .cart-img {
     width: 80px;
     height: 80px;
     background-color: #333;
+    background-size: cover;
+    background-position: center;
     border-radius: 8px;
     margin-right: 20px;
-    object-fit: cover;
 }
 
-.cart-details { flex-grow: 1; padding-right: 20px; }
-.cart-details h4 { color: var(--color-text); margin-bottom: 5px; }
-.unit-price { font-size: 0.85rem; color: #888; margin-bottom: 10px; }
-
-/* Luxury Qty Controls */
-.qty-control {
-    display: inline-flex;
-    align-items: center;
-    background-color: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 50px;
-    padding: 4px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-    margin-top: 10px;
+.cart-details {
+    flex-grow: 1;
 }
 
-.qty-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: none;
+.cart-details h4 {
+    color: var(--color-text);
+    margin-bottom: 5px;
+}
+
+.remove-btn {
     background: transparent;
-    color: #fff;
-    font-size: 1.2rem;
+    color: #ff4040; /* Red for remove */
+    border: 1px solid #ff4040;
+    padding: 5px 15px;
+    border-radius: 20px;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s;
+    font-size: 0.8rem;
 }
 
-.qty-btn:hover {
+.remove-btn:hover {
+    background: #ff4040;
+    color: white;
+}
+
+.cart-summary {
+    margin-top: 40px;
+    text-align: right;
+}
+
+.total-price {
+    font-size: 2.5rem;
+    color: var(--color-gold);
+    font-weight: 600;
+    margin: 10px 0 20px;
+}
+
+.checkout-btn {
     background-color: var(--color-gold);
     color: #000;
-    transform: scale(1.1);
-}
-
-.qty-number {
-    font-family: var(--font-mono);
-    font-weight: 700;
-    color: #fff;
-    padding: 0 15px;
-    font-size: 1rem;
-    min-width: 20px;
-    text-align: center;
-}
-
-/* Remove Button with Underline Animation */
-.remove-action {
-    background: transparent;
     border: none;
-    color: #666;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+    padding: 15px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 30px;
     cursor: pointer;
-    padding: 5px 0;
-    position: relative;
-    margin-top: 15px;
+    transition: transform 0.2s;
+}
+
+.checkout-btn:hover {
+    transform: scale(1.05);
+    background-color: #fff;
+}
+
+.continue-link {
     display: block;
+    margin-top: 15px;
+    color: #888;
+    text-decoration: none;
+    font-size: 0.9rem;
 }
 
-.remove-action::after {
-    content: '';
-    position: absolute;
-    width: 0%;
-    height: 1px;
-    bottom: 2px;
-    left: 0;
-    background-color: var(--color-danger);
-    transition: width 0.3s ease;
+/* --- UNIQUE CONTACT SECTION --- */
+.contact-section-unique {
+    padding: 100px 5%;
+    background-color: #0d0d0d; /* Deepest black */
+    display: flex;
+    justify-content: center;
 }
 
-.remove-action:hover { color: var(--color-danger); }
-.remove-action:hover::after { width: 100%; }
-
-.cart-summary { margin-top: 40px; text-align: right; }
-.total-price { font-size: 2.5rem; color: var(--color-gold); font-weight: 600; margin: 10px 0 20px; }
-
-@media (max-width: 600px) {
-    .cart-item { flex-direction: column; align-items: flex-start; }
-    .cart-img { margin-bottom: 15px; }
-    .cart-actions { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-top: 15px; border-top: 1px solid #333; padding-top: 10px; }
-}
-
-/* =========================================
-   9. FORMS (CONTACT & TAILORING)
-   ========================================= */
-/* Contact Page Layout */
 .contact-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Stacks on mobile */
     max-width: 1200px;
     width: 100%;
     background: linear-gradient(145deg, #161618, #0f0f0f);
     border: 1px solid #222;
     border-radius: 20px;
     overflow: hidden;
-    margin: 0 auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
+/* LEFT SIDE: TEXT */
 .contact-info {
     flex: 1;
     padding: 60px;
@@ -560,14 +870,51 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
     justify-content: center;
 }
 
+.section-title {
+    font-size: 3rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.contact-subtext {
+    color: #888;
+    margin-bottom: 40px;
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+.dc-item {
+    margin-bottom: 20px;
+}
+
+.dc-item .label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.dc-item .value {
+    color: #fff;
+    font-family: serif;
+    font-size: 1.1rem;
+}
+
+/* RIGHT SIDE: FORM */
 .contact-form-wrapper {
     flex: 1;
     padding: 60px;
-    background-color: rgba(255,255,255,0.02);
+    background-color: rgba(255,255,255,0.02); /* Slight tint */
 }
 
-/* Floating Label Inputs */
-.input-group { position: relative; margin-bottom: 40px; }
+/* INPUT STYLING (The Magic Part) */
+.input-group {
+    position: relative;
+    margin-bottom: 40px; /* Space for the label */
+}
 
 .styled-input {
     width: 100%;
@@ -578,14 +925,22 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
     font-size: 1.1rem;
     padding: 10px 0;
     outline: none;
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
 }
 
+/* Make textarea auto-grow visually */
+textarea.styled-input {
+    resize: none;
+    min-height: 40px;
+}
+
+/* The Animated Line Effect */
 .styled-input:focus {
     border-bottom-color: var(--color-gold);
-    box-shadow: 0 4px 4px -4px var(--color-gold);
+    box-shadow: 0 4px 4px -4px var(--color-gold); /* Glow at bottom */
 }
 
+/* FLOATING LABEL LOGIC */
 .floating-label {
     position: absolute;
     top: 10px;
@@ -593,109 +948,522 @@ section { padding: 80px 5%; border-bottom: 1px solid #222; }
     color: #666;
     pointer-events: none;
     transition: 0.3s ease all;
+    font-size: 1rem;
 }
 
+/* When input is focused OR has text (placeholder shown), move label up */
 .styled-input:focus ~ .floating-label,
 .styled-input:not(:placeholder-shown) ~ .floating-label {
     top: -20px;
     font-size: 0.8rem;
     color: var(--color-gold);
+    letter-spacing: 1px;
     font-weight: 600;
 }
 
-/* Tailoring Specifics */
-.tailoring-container {
-    max-width: 700px;
-    margin: 40px auto;
-    background-color: #fff; /* White paper look */
-    color: #333;
-    padding: 40px;
-    border-radius: 8px;
-}
-.tailoring-container h2 { color: #000; }
-.tailoring-container .input-group input { 
-    border: 1px solid #ccc; 
-    color: #000; 
-    padding: 10px;
-}
-
+/* MOBILE RESPONSIVENESS */
 @media (max-width: 768px) {
-    .contact-container { flex-direction: column; }
-    .contact-info { border-right: none; border-bottom: 1px solid #222; padding: 40px; }
-    .contact-form-wrapper { padding: 40px; }
+    .contact-container {
+        flex-direction: column;
+    }
+    .contact-info {
+        border-right: none;
+        border-bottom: 1px solid #222;
+        padding: 40px;
+    }
+    .contact-form-wrapper {
+        padding: 40px;
+    }
+    .section-title {
+        font-size: 2rem;
+    }
 }
 
-/* =========================================
-   10. FOOTER
-   ========================================= */
+/* --- NEW CART STYLES --- */
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    padding: 25px 0;
+    border-bottom: 1px solid #333;
+    flex-wrap: wrap; /* Good for mobile */
+}
+
+.cart-details {
+    flex-grow: 1;
+    padding-right: 20px;
+}
+
+.unit-price {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+/* The Pill Shape Container */
+.qty-control {
+    display: inline-flex;
+    align-items: center;
+    background-color: #2c2c2e;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+/* The + and - Buttons */
+.qty-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qty-btn:hover {
+    color: var(--color-gold);
+}
+
+/* The Number in the middle */
+.qty-number {
+    margin: 0 15px;
+    font-weight: 600;
+    color: #fff;
+    min-width: 20px;
+    text-align: center;
+}
+
+.cart-actions {
+    text-align: right;
+    min-width: 100px;
+}
+
+.item-total-price {
+    font-size: 1.2rem;
+    color: var(--color-gold);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.remove-text-btn {
+    background: none;
+    border: none;
+    color: #ff453a;
+    font-size: 0.8rem;
+    text-decoration: underline;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.remove-text-btn:hover {
+    opacity: 1;
+}
+
+/* Mobile Tweak */
+@media (max-width: 600px) {
+    .cart-actions {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        border-top: 1px solid #333;
+        padding-top: 10px;
+    }
+}
+
+/* --- LUXURY CART CONTROLS --- */
+
+/* 1. The Control Pill (Container) */
+.qty-control {
+    display: inline-flex;
+    align-items: center;
+    background-color: #1a1a1a; /* Very dark grey */
+    border: 1px solid #333;    /* Subtle border */
+    border-radius: 50px;       /* Full pill shape */
+    padding: 4px;              /* Padding ensures buttons don't touch edges */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); /* Inner shadow for depth */
+    margin-top: 10px;
+}
+
+/* 2. The + and - Buttons */
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%; /* Perfect circles inside the pill */
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 300; /* Thin, elegant text */
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 3px; /* Visual alignment fix */
+}
+
+/* Hover Effect: Turns Gold and Pops */
+.qty-btn:hover {
+    background-color: var(--color-gold);
+    color: #000;
+    transform: scale(1.1); /* Slight zoom */
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.4); /* Glow */
+}
+
+/* Active Click Effect */
+.qty-btn:active {
+    transform: scale(0.9);
+}
+
+/* 3. The Number Display */
+.qty-number {
+    font-family: 'Courier New', monospace; /* Tech feel */
+    font-weight: 700;
+    color: #fff;
+    padding: 0 15px;
+    font-size: 1rem;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* --- THE REMOVE BUTTON --- */
+.remove-action {
+    background: transparent;
+    border: none;
+    color: #666; /* Start subtle (Grey) */
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    padding: 10px 0;
+    position: relative;
+    transition: color 0.3s ease;
+    margin-top: 5px;
+}
+
+/* The "Underline" Animation */
+.remove-action::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 1px;
+    bottom: 5px;
+    left: 0;
+    background-color: #ff453a; /* iOS Red */
+    transition: width 0.3s ease;
+}
+
+/* Hover State */
+.remove-action:hover {
+    color: #ff453a; /* Text turns red */
+}
+
+.remove-action:hover::after {
+    width: 100%; /* Line draws across */
+}
+
+
+
+/* General Container Styling */
+
+
+
+    /* --- CSS STYLING --- */
+    .tailoring-container {
+        max-width: 700px;
+        margin: 40px auto;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border: 1px solid #e0e0e0;
+    }
+
+    .tailoring-header h2 {
+        margin-top: 0;
+        color: #333;
+        font-size: 24px;
+        border-bottom: 2px solid #d4af37;
+        display: inline-block;
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+    }
+
+    /* Grid Layout */
+    .measurement-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-group label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #444;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+    }
+
+    .input-group input, 
+    .input-group textarea {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 15px;
+        width: 100%; /* Ensures inputs don't overflow */
+        box-sizing: border-box; /* Includes padding in width */
+    }
+
+    .full-width { grid-column: 1 / -1; }
+    textarea { resize: vertical; min-height: 100px; }
+
+    /* Button Styling */
+    #btn-confirm {
+        width: 100%;
+        padding: 15px;
+        background-color: #1a1a1a;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease;
+    }
+    #btn-confirm:hover { background-color: #333; }
+    #btn-confirm:disabled { background-color: #777; cursor: wait; }
+
+    /* Confirmation Message Section */
+    #confirmation-message {
+        display: none; /* Hidden by default */
+        text-align: center;
+        padding: 40px 20px;
+        background-color: #f9fff9;
+        border: 1px solid #c3e6cb;
+        border-radius: 8px;
+        color: #155724;
+    }
+
+    .checkmark-circle {
+        width: 60px;
+        height: 60px;
+        background-color: #d4edda;
+        border-radius: 50%;
+        margin: 0 auto 15px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .checkmark-symbol {
+        font-size: 30px;
+        color: #155724;
+        line-height: 1;
+    }
+
+    /* The box that was missing or empty before */
+    #summary-content {
+        background: #fff;
+        border: 1px dashed #c3e6cb;
+        padding: 15px;
+        margin-top: 20px;
+        text-align: left;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    @media (max-width: 600px) {
+        .measurement-grid { grid-template-columns: 1fr; }
+    }
+
+    
+/* --- MOBILE DROPDOWN STYLES --- */
+@media (max-width: 768px) {
+    /* 1. Fix the parent container spacing */
+    .dropdown-parent {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* 2. Reset the dropdown menu so it sits inside the list */
+    .dropdown-content {
+        position: static;       /* Stops it from floating over other text */
+        display: none;          /* Hidden by default */
+        box-shadow: none;       /* Remove shadow for cleaner mobile look */
+        background-color: #222; /* Slightly darker background to distinguish it */
+        width: 100%;
+        
+    }
+
+    /* 3. The magical class that JavaScript will add to show the menu */
+    .dropdown-parent.active .dropdown-content {
+        display: block;
+    }
+    
+    /* 4. Style the links inside so they look good */
+    .dropdown-content li a {
+        padding: 15px 0;
+        border-bottom: 1px solid #444;
+        color: #ccc;
+    }
+}
+
+/* Footer Styles */
 .site-footer {
-    background-color: #1a1a1a;
-    padding: 60px 0 20px;
-    border-top: 1px solid #222;
+    background-color: #1a1a1a; /* Dark sleek background */
+    color: #ffffff;
+    padding: 40px 0 20px;
+    font-family: Arial, sans-serif;
+    margin-top: 50px; /* Pushes footer away from content above */
 }
 
 .footer-container {
     display: flex;
     justify-content: space-around;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allows stacking on mobile */
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-.footer-col { flex: 1; min-width: 250px; margin-bottom: 30px; }
+.footer-col {
+    flex: 1;
+    min-width: 250px; /* Ensures columns don't get too thin */
+    margin-bottom: 20px;
+}
 
 .footer-col h3 {
-    color: var(--color-gold);
+    color: #f4a261; /* Gold/Accent color for headings */
     margin-bottom: 15px;
     font-size: 18px;
     text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.footer-col a:hover { color: var(--color-gold); }
+.footer-col p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #cccccc;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col a {
+    color: #cccccc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-col a:hover {
+    color: #f4a261; /* Turns gold when hovered */
+}
+
+.site-footer hr {
+    border: 0;
+    border-top: 1px solid #444;
+    margin: 20px 0;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+/* Social Icons Styling */
+.social-links {
+    margin-top: 15px;
+}
 
 .social-links a {
     display: inline-block;
     width: 40px;
     height: 40px;
-    background-color: #333;
-    line-height: 40px;
-    text-align: center;
-    border-radius: 50%;
+    background-color: #333; /* Dark circle background */
+    color: #ffffff;
+    line-height: 40px; /* Centers icon vertically */
+    text-align: center; /* Centers icon horizontally */
+    border-radius: 50%; /* Makes it a circle */
     margin-right: 10px;
-    transition: var(--transition-fast);
+    font-size: 18px;
+    transition: all 0.3s ease;
 }
 
+/* Hover Effects */
 .social-links a:hover {
-    background-color: var(--color-gold);
-    color: #000;
-    transform: translateY(-3px);
+    background-color: #f4a261; /* Gold background on hover */
+    color: #000; /* Icon turns black on hover */
+    transform: translateY(-3px); /* Slight lift effect */
 }
-
-/* =========================================
-   11. UTILITIES (TOAST)
-   ========================================= */
+/* Toast Notification Styling */
 #toast {
-    visibility: hidden;
+    visibility: hidden; /* Hidden by default */
     min-width: 250px;
-    background-color: var(--color-gold);
-    color: #000;
+    margin-left: -125px; /* Center the toast */
+    background-color: #333; /* Dark background */
+    color: #fff; /* White text */
     text-align: center;
-    border-radius: 4px;
+    border-radius: 4px; /* Rounded corners */
     padding: 16px;
-    position: fixed;
-    z-index: 2000;
+    position: fixed; /* Stays in place when scrolling */
+    z-index: 1000; /* Sit on top of everything */
     left: 50%;
-    transform: translateX(-50%);
     bottom: 30px;
-    font-weight: 700;
-    box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+    font-size: 17px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.3); /* Subtle drop shadow */
 }
 
+/* The 'show' class makes it visible */
 #toast.show {
     visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-@keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-@keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+/* Animations */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
