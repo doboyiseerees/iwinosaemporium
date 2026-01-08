@@ -23,7 +23,7 @@ if (hamburger) {
 let cart = JSON.parse(localStorage.getItem('ATT_Cart')) || [];
 updateCartBadge(); 
 
-// --- 4. UPDATE NAV BADGE ---
+// --- 4. NAV BADGE ---
 function updateCartBadge() {
     const badge = document.getElementById('cart-count');
     if (badge) {
@@ -32,7 +32,7 @@ function updateCartBadge() {
     }
 }
 
-// --- 5. ADD TO CART (FIXED) ---
+// --- 5. ADD TO CART ---
 function addToCart(productId) {
     // 1. Find the product details from our database above
     const productInfo = products.find(p => p.id === productId);
