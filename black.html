@@ -22,29 +22,22 @@
     <ul class="nav-links" id="nav-links-container">
         <li><a href="black.html">Home</a></li>
         
-        <li class="dropdown-parent">
+        <li class="dropdown-parent dropdown">
             <a href="javascript:void(0)" class="drop-trigger">About ▾</a>
-            <li class="premium-link">
-    <a href="checkout.html" style="color: #d4af37; font-weight: bold;">
-        Join the Guild ✦
-    </a>
-</li>
             <ul class="dropdown-content">
                 <li><a href="black.html#motivation">Mentality & Motivation</a></li>
                 <li><a href="winery-page.html">Winery Collection</a></li>
                 <li><a href="Clothing-page.html">Clothing & Attire</a></li>
                 <li class="premium-link">
-    <a href="checkout.html" style="color: #d4af37; font-weight: bold;">
-        Join the Guild ✦
-    </a>
-</li>
+                    <a href="checkout.html" style="color: #d4af37; font-weight: bold;">Join the Guild ✦</a>
+                </li>
             </ul>
         </li>
 
         <li>
-    <a href="cart.html" class="cart-link">
-        Cart (<span id="cart-count">0</span>)
-    </a>
+            <a href="cart.html" class="cart-link">
+                Cart (<span id="cart-count">0</span>)
+            </a>
         </li>
         
         <li><a href="#contact">Contact</a></li>
@@ -91,26 +84,28 @@
                     </div>
                     <h3>Manchester Gin</h3>
                     <p class="price">$120.00</p>
-                    <p class="summary">Produced using red grapes, pink wine has the complex fruit flavors of red wine, but with the fresh sharpness of white.</p>
-                    <a href="product.html?id=wine_003" class="order-btn">More on this</a>
+                    <p class="summary">Produced using red grapes, pink wine has the complex fruit flavors.</p>
+                    <button class="order-btn" onclick="addToCart('wine_003'); showToast()">Add to Cart</button>
                 </div>
+
                 <div class="carousel-item">
                     <div class="card">
                         <img src="/images/wine21.jpg" alt="Wine">
                     </div>
                     <h3>Chivas Regal</h3>
                     <p class="price">$250.00</p>
-                    <p class="summary">This 12-year-old blended Scotch whisky is Chivas signature blend. Luxurious flavours with a smoother and richer taste.</p>
-                    <a href="product.html?id=wine_002" class="order-btn">More on this</a>
+                    <p class="summary">This 12-year-old blended Scotch whisky is Chivas signature blend.</p>
+                    <button class="order-btn" onclick="addToCart('wine_002'); showToast()">Add to Cart</button>
                 </div>
+
                 <div class="carousel-item">
-                     <div class="card">
+                      <div class="card">
                         <img src="/images/wine17.jpg" alt="wines">
                     </div>
                     <h3>Mercedes vodka</h3>
                     <p class="price">$90.00</p>
-                    <p class="summary">With an alcohol content of 40%, this pure vodka impresses with its clean taste and distinct aroma</p>
-                    <a href="product.html?id=wine_001" class="order-btn">More on this</a>
+                    <p class="summary">With an alcohol content of 40%, this pure vodka impresses.</p>
+                    <button class="order-btn" onclick="addToCart('wine_001'); showToast()">Add to Cart</button>
                 </div>
             </div>
         </div>
@@ -132,10 +127,11 @@
                     <h3>Edo Royal Beads</h3>
                     <p class="price">$400.00</p>
                     <p class="summary">Authentic coral beads for traditional attire.</p>
-                    <button class="order-btn" onclick="addToCart('suit_001'); showToast()">
-                            Order a custom made - $1,200
+                    <button class="order-btn" onclick="addToCart('acc_002'); showToast()">
+                        Add to Cart
                     </button>
                 </div>
+
                 <div class="carousel-item">
                     <div class="card">
                         <img src="/images/agbada1.jpg" alt="agbada">
@@ -143,166 +139,157 @@
                     <h3>Agbada</h3>
                     <p class="price">$150.00</p>
                     <p class="summary">Modern Nigerian tailoring, sharp fit.</p>
-                    <button class="order-btn" onclick="addToCart('suit_001'); showToast()">
-                        
-                            Order a custom made - $1,200 
+                    <button class="order-btn" onclick="addToCart('cloth_022'); showToast()">
+                         Add to Cart 
                     </button>
                 </div>
-                 <div class="carousel-item">
+
+                <div class="carousel-item">
                     <div class="card">
                         <img src="/images/suits7.jpg" alt="Suits">
                     </div>
                     <h3>Suits</h3>
                     <p class="price">$850.00</p>
                     <p class="summary">Imported wool, tailored to perfection.</p>
-                    <button class="order-btn"onclick="addToCart('suit_001'); showToast()">
-                            Order a custom made - $1,200
+                    <button class="order-btn"onclick="addToCart('cloth_023'); showToast()">
+                         Add to Cart
                     </button>
                 </div>
             </div>
         </div>
         <a href="Clothing-page.html" class="learn-more-btn">View Collection →</a>
 
-        <!--tailoring form-->
-<div class="tailoring-container">
+        <div class="tailoring-container">
     
-    <div id="tailoring-form-section">
-        <div class="tailoring-header">
-            <h2>Custom Tailoring</h2>
-            <p>Please enter your measurements (in inches).</p>
-        </div>onclick
+            <div id="tailoring-form-section">
+                <div class="tailoring-header">
+                    <h2>Custom Tailoring</h2>
+                    <p>Please enter your measurements (in inches).</p>
+                </div>
 
-        <form id="tailoringForm">
-            <div class="measurement-grid">
-                <div class="input-group">
-                    <label for="bust_chest">Bust / Chest</label>
-                    <input type="number" id="bust_chest" name="bust_chest" placeholder="e.g. 38" step="0.1" required>
-                </div>
-                <div class="input-group">
-                    <label for="waist">Waist</label>
-                    <input type="number" id="waist" name="waist_size" placeholder="e.g. 32" step="0.1" required>
-                </div>
-                <div class="input-group">
-                    <label for="hips">Hips</label>
-                    <input type="number" id="hips"  name="hip_size" placeholder="e.g. 40" step="0.1" required>
-                </div>
-                <div class="input-group">
-                    <label for="shoulder">Shoulder Width</label>
-                    <input type="number" id="shoulder" name="shoulder_size" placeholder="e.g. 16" step="0.1" required>
-                </div>
-                <div class="input-group">
-                    <label for="sleeve">Sleeve Length</label>
-                    <input type="number" id="sleeve" name="sleeve_size" placeholder="e.g. 24" step="0.1">
-                </div>
-                <div class="input-group">
-                    <label for="length">Total Length</label>
-                    <input type="number" id="length" name="full_length" placeholder="e.g. 60" step="0.1">
-                </div>
-                <div class="input-group full-width">
-                    <label for="comments">Extra Comments</label>
-                    <textarea id="comments" name="extra_comments"placeholder="Any specific adjustments,preferred colour..."></textarea>
-                </div>
+                <form id="tailoringForm">
+                    <div class="measurement-grid">
+                        <div class="input-group">
+                            <label for="bust_chest">Bust / Chest</label>
+                            <input type="number" id="bust_chest" name="bust_chest" placeholder="e.g. 38" step="0.1" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="waist">Waist</label>
+                            <input type="number" id="waist" name="waist_size" placeholder="e.g. 32" step="0.1" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="hips">Hips</label>
+                            <input type="number" id="hips"  name="hip_size" placeholder="e.g. 40" step="0.1" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="shoulder">Shoulder Width</label>
+                            <input type="number" id="shoulder" name="shoulder_size" placeholder="e.g. 16" step="0.1" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="sleeve">Sleeve Length</label>
+                            <input type="number" id="sleeve" name="sleeve_size" placeholder="e.g. 24" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label for="length">Total Length</label>
+                            <input type="number" id="length" name="full_length" placeholder="e.g. 60" step="0.1">
+                        </div>
+                        <div class="input-group full-width">
+                            <label for="comments">Extra Comments</label>
+                            <textarea id="comments" name="extra_comments" placeholder="Any specific adjustments, preferred colour..."></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-confirm">Confirm Measurements</button>
+                </form>
             </div>
 
-            <button type="submit" id="btn-confirm">Confirm Measurements</button>
-        </form>
-    </div>
+            <div id="confirmation-message" style="display:none;">
+                <div class="checkmark-circle">
+                    <span class="checkmark-symbol">&#10004;</span>
+                </div>
+                <h3>Measurements Confirmed</h3>
+                <p>Will be tailored as specified. Thank you for trusting us.</p>
+                <div id="summary-content"></div>
+            </div>
 
-    <div id="confirmation-message">
-        <div class="checkmark-circle">
-            <span class="checkmark-symbol">&#10004;</span>
         </div>
-        <h3>Measurements Confirmed</h3>
-        <p>Will be tailored as specified. Thank you for trusting us.</p>
-        
-        <div id="summary-content"></div>
-    </div>
 
-</div>
-
-    <div class="contact-container">
-        
-        <div class="contact-info">
-            <h2 class="section-title">Let’s Start a <br><span class="gold-text">Conversation</span></h2>
-            <p class="contact-subtext">
-                Whether for a custom bespoke suit, a winery reservation, or just to share your story of tenacity.
-            </p>
+        <div class="contact-container" id="contact">
             
-            <div class="direct-contact">
-                <div class="dc-item">
-                    <span class="label">Email</span>
-                    <span class="value">concierge@tenacitytrounce.com</span>
-                </div>
-                <div class="dc-item">
-                    <span class="label">Location</span>
-                    <span class="value">Benin • London • New York</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="contact-form-wrapper">
-            <form id="contact-form" onsubmit="submitContactForm(event)">
+            <div class="contact-info">
+                <h2 class="section-title">Let’s Start a <br><span class="gold-text">Conversation</span></h2>
+                <p class="contact-subtext">
+                    Whether for a custom bespoke suit, a winery reservation, or just to share your story of tenacity.
+                </p>
                 
-                <div class="input-group">
-                    <input type="text" id="c-name" required placeholder=" " class="styled-input">
-                    <label for="c-name" class="floating-label">Your Name</label>
+                <div class="direct-contact">
+                    <div class="dc-item">
+                        <span class="label">Email</span>
+                        <span class="value">concierge@tenacitytrounce.com</span>
+                    </div>
+                    <div class="dc-item">
+                        <span class="label">Location</span>
+                        <span class="value">Benin • London • New York</span>
+                    </div>
                 </div>
+            </div>
 
-                <div class="input-group">
-                    <input type="email" id="c-email" required placeholder=" " class="styled-input">
-                    <label for="c-email" class="floating-label">Email Address</label>
+            <div class="contact-form-wrapper">
+                <form id="contact-form" onsubmit="submitContactForm(event)">
+                    <div class="input-group">
+                        <input type="text" id="c-name" required placeholder=" " class="styled-input">
+                        <label for="c-name" class="floating-label">Your Name</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="email" id="c-email" required placeholder=" " class="styled-input">
+                        <label for="c-email" class="floating-label">Email Address</label>
+                    </div>
+
+                    <div class="input-group">
+                        <textarea id="c-msg" rows="1" required placeholder=" " class="styled-input"></textarea>
+                        <label for="c-msg" class="floating-label">Your Message</label>
+                    </div>
+
+                    <button type="submit" class="cta-btn full-width">Send Request</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Iwinosa's Emporium</h3>
+                <p>Premium Agbada, Suits, and Fine Wines. Quality delivered to your doorstep.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/shop">Shop All</a></li>
+                    <li><a href="/policy">Return Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Connect</h3>
+                <p>Email: support@Iwinosaemporium.com</p>
+                <p>Whatsapp: +234 800 123 4567</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a> 
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                 </div>
-
-                <div class="input-group">
-                    <textarea id="c-msg" rows="1" required placeholder=" " class="styled-input"></textarea>
-                    <label for="c-msg" class="floating-label">Your Message</label>
-                </div>
-
-                <button type="submit" class="cta-btn full-width">Send Request</button>
-            </form>
-        </div>
-
-    </div>
-</section>
-
-<footer class="site-footer">
-    <div class="footer-container">
-        
-        <div class="footer-col">
-            <h3>Iwinosa's Emporium</h3>
-            <p>Premium Agbada, Suits, and Fine Wines. Quality delivered to your doorstep.</p>
-        </div>
-
-        <div class="footer-col">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a href="/shop">Shop All</a></li>
-                <li><a href="/policy">Return Policy</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-col">
-            <h3>Connect</h3>
-            <p>Email: support@Iwinosaemporium.com</p>
-            <p>Whatsapp: +234 800 123 4567</p>
-            
-            <div class="social-links">
-                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a> 
-                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
         </div>
-    </div>
-
-    <hr>
-
-    <div class="footer-bottom">
-        <p>&copy; 2026 Iwinosa's Emporium. All Rights Reserved.</p>
-    </div>
-</footer>
-<div id="toast">Item added to cart!</div>
-
+        <hr>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Iwinosa's Emporium. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <div id="toast">Item added to cart!</div>
     <script src="black.js"></script>
 </body>
 </html>
