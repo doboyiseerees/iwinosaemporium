@@ -1,27 +1,36 @@
 require('dotenv').config();
 const path = require('path');
-// --- server.js (Final Corrected Version) ---
 const express = require('express');
-app.use(express.static(__dirname));
-const app = express();
-app.use(express.static('public'));
 
-//  STRIPE SECRET KEY
+// 1. Initialize 'app' FIRST (This fixes the crash)
+const app = express();
+
+// 2. Setup Stripe
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-//  SERVE FILES 
-// We use __dirname to tell it to look in the CURRENT folder
+// 3. Serve Files
+// This tells the server to allow access to images, css, and js in the main folder
 app.use(express.static(__dirname)); 
-
-// 3. MIDDLEWARE
 app.use(express.json());
 
-const YOUR_DOMAIN = 'http://localhost:3000';
-
-// ---Temporary database ---
+// --- Temporary database ---
 const users = [];
 
-// --- LOGIN/SIGNUP ROUTES ---
+// --- DYNAMIC DOMAIN (Fixes the Stripe Redirect) ---
+// This automatically detects if you are on Localhost or Render
+const getDomain = (req) => {
+    // If we are on the live server, use the actual URL. Otherwise use localhost.
+    return req.headers.origin || 'http://localhost:3000';
+};
+
+// --- ROUTES ---
+
+// 1. Homepage Route (Fixes "Cannot GET /")
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'black.html'));
+});
+
+// 2. Signup
 app.post('/signup', (req, res) => {
     const { name, email, password } = req.body;
     const userExists = users.find(u => u.email === email);
@@ -30,6 +39,7 @@ app.post('/signup', (req, res) => {
     res.json({ success: true, message: 'Account created.' });
 });
 
+// 3. Login
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
     const user = users.find(u => u.email === email && u.password === password);
@@ -37,9 +47,10 @@ app.post('/login', (req, res) => {
     else res.json({ success: false, message: 'Invalid login.' });
 });
 
-// --- STRIPE PAYMENT ROUTE ---
+// 4. Stripe Payment
 app.post('/create-checkout-session', async (req, res) => {
     try {
+        const domain = getDomain(req); // Get the correct URL (Local or Live)
         const items = req.body.items;
 
         if (!items || items.length === 0) {
@@ -61,8 +72,8 @@ app.post('/create-checkout-session', async (req, res) => {
             payment_method_types: ['card'],
             line_items: lineItems,
             mode: 'payment',
-            success_url: `${YOUR_DOMAIN}/success.html`,
-            cancel_url: `${YOUR_DOMAIN}/cancel.html`,
+            success_url: `${domain}/black.html?status=success`, 
+            cancel_url: `${domain}/black.html?status=canceled`,
         });
 
         res.json({ id: session.id });
@@ -73,12 +84,7 @@ app.post('/create-checkout-session', async (req, res) => {
 });
 
 // --- START SERVER ---
-
 const PORT = process.env.PORT || 3000; 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'black.html'));
-});
-
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
