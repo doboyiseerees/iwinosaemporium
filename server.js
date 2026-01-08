@@ -9,8 +9,13 @@ const app = express();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // 3. Serve Files
-// This tells the server to allow access to images, css, and js in the main folder
+// 3. Serve Files
+// Serve the main folder (for HTML files)
 app.use(express.static(__dirname)); 
+
+// Serve the 'public' folder (This fixes the images!)
+app.use(express.static(path.join(__dirname, 'public'))); 
+
 app.use(express.json());
 
 // --- Temporary database ---
