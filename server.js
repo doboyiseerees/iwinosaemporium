@@ -1,13 +1,15 @@
 require('dotenv').config();
+const path = require('path');
 // --- server.js (Final Corrected Version) ---
 const express = require('express');
+app.use(express.static(__dirname));
 const app = express();
 app.use(express.static('public'));
 
-// 1. STRIPE SECRET KEY
+//  STRIPE SECRET KEY
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-// 2. SERVE FILES (FIXED HERE)
+//  SERVE FILES 
 // We use __dirname to tell it to look in the CURRENT folder
 app.use(express.static(__dirname)); 
 
@@ -16,7 +18,7 @@ app.use(express.json());
 
 const YOUR_DOMAIN = 'http://localhost:3000';
 
-// --- DATABASE (Temporary) ---
+// ---Temporary database ---
 const users = [];
 
 // --- LOGIN/SIGNUP ROUTES ---
@@ -72,8 +74,10 @@ app.post('/create-checkout-session', async (req, res) => {
 
 // --- START SERVER ---
 
-// Define the port: Use the system's port OR 3000 if testing locally
 const PORT = process.env.PORT || 3000; 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'black.html'));
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
