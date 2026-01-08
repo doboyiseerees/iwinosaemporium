@@ -19,12 +19,12 @@
             <p class="sub-text">Access your curated collection.</p>
             
             <div class="input-group">
-                <label for="Email Address"> Email Address</label>
+                <label for="login-email">Email Address</label>
                 <input type="email" id="login-email" required placeholder="concierge@tenacitytrounce.com">
             </div>
             
             <div class="input-group">
-                <label for="Password">Password</label>
+                <label for="login-pass">Password</label>
                 <input type="password" id="login-pass" required placeholder="••••••••">
             </div>
 
@@ -36,17 +36,17 @@
             <p class="sub-text">Begin your journey of tenacity.</p>
             
             <div class="input-group">
-                <label for="Full Name">Full Name</label>
+                <label for="signup-name">Full Name</label>
                 <input type="text" id="signup-name" required placeholder="Enter your name">
             </div>
 
             <div class="input-group">
-                <label for="Email Address">Email Address</label>
+                <label for="signup-email">Email Address</label>
                 <input type="email" id="signup-email" required placeholder="Enter your email">
             </div>
             
             <div class="input-group">
-                <label for="Password">Create Password</label>
+                <label for="signup-pass">Create Password</label>
                 <input type="password" id="signup-pass" required placeholder="Create a strong password">
             </div>
 
@@ -75,7 +75,7 @@
             }
         }
 
-        // --- BACKEND CONNECTION ---
+        // --- BACKEND CONNECTION (FIXED) ---
         
         // 1. Sign Up
         document.getElementById('signup-form').addEventListener('submit', async (e) => {
@@ -84,7 +84,8 @@
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-pass').value;
 
-            const response = await fetch('http://localhost:3000/signup', {
+            // FIX: Removed http://localhost:3000
+            const response = await fetch('/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, password })
@@ -104,7 +105,8 @@
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-pass').value;
 
-            const response = await fetch('http://localhost:3000/login', {
+            // FIX: Removed http://localhost:3000
+            const response = await fetch('/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
