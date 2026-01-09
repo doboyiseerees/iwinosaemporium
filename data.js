@@ -370,3 +370,6 @@ const inventory = [
         reviews: []
     }
 ];
+// ... (End of your huge inventory array)
+
+const products = inventory;

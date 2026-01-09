@@ -1,13 +1,6 @@
 // --- 1. PRODUCT DATABASE ---
-// This acts as your inventory so the code knows prices and names.
-const products = [
-    { id: 'wine_001', name: 'Mercedes Vodka', price: 90, image: '/images/wine17.jpg' },
-    { id: 'wine_002', name: 'Chivas Regal', price: 250, image: '/images/wine21.jpg' },
-    { id: 'wine_003', name: 'Manchester Gin', price: 120, image: '/images/wine16.jpg' },
-    { id: 'suit_001', name: 'Custom Suit / Attire', price: 1200, image: '/images/suits7.jpg' },
-    // Note: In your HTML, all clothing buttons currently use 'suit_001'. 
-    // You should give them unique IDs later (e.g., 'beads_001', 'agbada_001').
-];
+// WE REMOVED THE HARDCODED LIST HERE.
+// Now, this script will automatically use the 'products' list from data.js
 
 // --- 2. MOBILE MENU ---
 const hamburger = document.getElementById('mobile-menu-btn');
@@ -20,6 +13,7 @@ if (hamburger) {
 }
 
 // --- 3. INITIALIZE CART ---
+// We use 'ATT_Cart' to save your items in the browser
 let cart = JSON.parse(localStorage.getItem('ATT_Cart')) || [];
 updateCartBadge(); 
 
@@ -34,11 +28,20 @@ function updateCartBadge() {
 
 // --- 5. ADD TO CART ---
 function addToCart(productId) {
-    // 1. Find the product details from our database above
+    // SECURITY CHECK:
+    // Ensure 'products' exists. If not, the data.js file didn't load correctly.
+    if (typeof products === 'undefined') {
+        console.error("CRITICAL ERROR: 'products' list is missing. Make sure data.js is loaded before black.js and includes 'const products = inventory;' at the bottom.");
+        alert("System Error: Product database not loaded.");
+        return;
+    }
+
+    // 1. Find the product details from the GLOBAL 'products' list (from data.js)
     const productInfo = products.find(p => p.id === productId);
 
     if (!productInfo) {
         console.error("Product ID not found in database:", productId);
+        alert("Error: Item not found in inventory."); // Helpful alert for debugging
         return; 
     }
 
@@ -59,7 +62,7 @@ function addToCart(productId) {
     }
     
     saveCart();
-    showToast(); // Show the "Item added" popup
+    showToast(productInfo.name); // Pass name to toast for better UX
 }
 
 // --- 6. CHANGE QUANTITY ---
@@ -97,6 +100,7 @@ function saveCart() {
 }
 
 // --- 8. STRIPE CHECKOUT ---
+// Note: This is your public test key. 
 const stripe = Stripe('pk_test_51SkRSLF4PldbqlsvXTAIUfo06TDLq40Bz0URppq5ucMPBPDxbIrzBwM1IPkNIwPArcq6IheQLfQ1wWIQcitcnxP300Gs6vc3Dj'); 
 const checkoutButton = document.getElementById('checkout-btn'); 
 
@@ -147,9 +151,11 @@ if (tailoringForm) {
 }
 
 // --- 10. TOAST NOTIFICATION ---
-function showToast() {
+function showToast(productName) {
     var x = document.getElementById("toast");
     if(x) {
+        // Use name if provided, otherwise default
+        x.innerText = productName ? productName + " added to bag!" : "Item added to bag!";
         x.className = "show";
         setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
     }
