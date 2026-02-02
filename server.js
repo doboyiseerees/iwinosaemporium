@@ -17,6 +17,15 @@ const DB_FILE = path.join(__dirname, 'data.json');
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public')); // Serve your HTML/CSS/JS files
+/* =========================================
+   HOMEPAGE ROUTE
+   ========================================= */
+// When someone visits the root domain (e.g., mysite.com/), show black.html
+app.get('/', (req, res) => {
+    // Adjust 'public' if your HTML file is in a specific folder, 
+    // otherwise just use: path.join(__dirname, 'black.html')
+    res.sendFile(path.join(__dirname, 'public', 'black.html'));
+});
 app.use('/uploads', express.static('uploads')); // Serve uploaded images
 
 // --- IMAGE UPLOAD CONFIGURATION ---
