@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | African’s Tenacity Trounce</title>
+    <link rel="stylesheet" href="black.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body id="page-product-detail">
+
+    <nav class="navbar">
+        <a href="black.html" class="brand-name">African’s Tenacity Trounce</a>
+        <div class="hamburger" id="mobile-menu-btn"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        <ul class="nav-links" id="nav-links-container">
+            <li><a href="black.html">Home</a></li>
+            <li><a href="winery-page.html">Winery</a></li>
+            <li><a href="Clothing-page.html">Clothing</a></li>
+            <li><a href="cart.html" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
+        </ul>
+    </nav>
+
+    <section class="detail-container">
+        
+        <div class="detail-image-wrapper">
+            <img id="detail-img" src="" alt="Product Image" class="magnified-img">
+        </div>
+
+        <div class="detail-info-wrapper">
+            <h1 id="detail-title" class="product-title">Loading...</h1>
+            <p id="detail-price" class="product-price">--</p>
+
+            <div class="detail-actions">
+                <button id="add-btn" class="btn btn-gold" style="padding: 15px 30px; font-size: 1.1rem;">Add to Cart</button>
+                <button id="hmmm-btn" class="hmmm-btn" style="padding: 15px;">Hmmm</button>
+            </div>
+
+            <div class="accordion-container">
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        About this Item <span class="icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p id="detail-desc">Loading description...</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        Shipping & Returns <span class="icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>We offer worldwide shipping. Returns are accepted within 30 days of purchase if the item is in original condition.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="reviews-section"></div>
+    <div id="recently-viewed"></div>
+
+    <div id="toast">Item added to cart!</div>
+    <script src="black.js"></script>
+    <a href="https://wa.me/2349053243444?text=Hello,%20I%20am%20interested%20in%20your%20collection." 
+   class="whatsapp-float" 
+   target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentality & Motivation | African’s Tenacity</title>
+    <link rel="stylesheet" href="black.css">
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <style>
+        /* Special Styling for Motivation Cards */
+        .heroes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-gold);
+        }
+
+        .hero-image-container {
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .hero-role {
+            color: #d4af37;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .hero-quote {
+            font-style: italic;
+            color: #fff;
+            font-size: 1.1rem;
+            margin: 15px 0;
+            border-left: 3px solid #d4af37;
+            padding-left: 10px;
+            text-align: left;
+        }
+
+        .hero-history {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+    </style>
+</head>
+<body id="page-motivation">
+
+    <nav class="navbar">
+        <div class="brand-name">AFRICAN’S TENACITY</div>
+        
+        <div class="hamburger" id="mobile-menu-btn">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <ul class="nav-links" id="nav-links-container">
+            <li><a href="black.html">Home</a></li>
+            
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">About <span class="arrow">▼</span></a>
+                <ul class="dropdown-content">
+                    <li><a href="motivation-page.html">Mentality & Motivation</a></li>
+                    <li><a href="winery.html">Winery Collection</a></li>
+                    <li><a href="clothing.html">Clothing & Attire</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+        </ul>
+    </nav>
+
+    <header style="text-align: center; padding: 60px 20px; background: #111;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Voices of <span style="color: #d4af37;">Resilience</span></h1>
+        <p style="color: #888;">Icons who defined the spirit of tenacity.</p>
+    </header>
+
+    <section class="motivation-section">
+        <div id="motivation-grid" class="heroes-grid">
+            <p style="color: #888; text-align: center; grid-column: 1/-1;">Loading voices...</p>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <p>&copy; 2024 African’s Tenacity. All rights reserved.</p>
+    </footer>
+
+    <script src="black.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const heroGrid = document.getElementById('motivation-grid');
+
+            try {
+                // 1. Fetch data from Server
+                const inventory = await fetchInventory(); 
+                
+                // 2. Filter for 'motivation' category
+                const heroes = inventory.filter(item => 
+                    (item.category || '').toLowerCase() === 'motivation'
+                );
+
+                // Clear loading text
+                heroGrid.innerHTML = ""; 
+
+                if (heroes.length === 0) {
+                     heroGrid.innerHTML = "<h3 style='text-align:center; width:100%; color:#888;'>No content found. Please add items with category 'motivation' in Admin.</h3>";
+                     return;
+                }
+
+                // 3. Render Cards
+                heroes.forEach(hero => {
+                    const card = document.createElement('div');
+                    card.className = 'hero-card';
+                    
+                    // FALLBACKS: If the field is empty, provide a default
+                    const displayRole = hero.role || "Icon of Tenacity";
+                    const displayQuote = hero.quote || hero.description || "No quote available.";
+
+                    card.innerHTML = `
+                        <div class="hero-image-container">
+                            <img src="${hero.image}" alt="${hero.name}" class="hero-img">
+                        </div>
+                        <div class="hero-content">
+                            <h2 style="margin:0; font-size:1.4rem;">${hero.name}</h2>
+                            <h4 class="hero-role">${displayRole}</h4>
+                            <blockquote class="hero-quote">"${displayQuote}"</blockquote>
+                            <p class="hero-history">${hero.description}</p>
+                        </div>
+                    `;
+                    heroGrid.appendChild(card);
+                });
+            } catch (error) {
+                console.error("Error loading motivation:", error);
+                heroGrid.innerHTML = "<h3 style='color:red; text-align:center;'>Could not load content from server.</h3>";
+            }
+        });
+    </script>
+</body>
+</html>

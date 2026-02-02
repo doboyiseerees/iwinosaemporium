@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | African Tenacity</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            background-color: #111; color: #fff; font-family: 'Helvetica Neue', sans-serif;
+            display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;
+        }
+        .checkout-card {
+            background: #1a1a1a; padding: 40px; border-radius: 10px; border: 1px solid #333;
+            text-align: center; max-width: 400px; width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h2 { color: #d4af37; margin-bottom: 10px; }
+        .product-image { 
+            width: 100px; height: 100px; 
+            background: linear-gradient(45deg, #d4af37, #b59025); 
+            margin: 20px auto; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+            font-size: 40px; color: #000;
+        }
+        .price { font-size: 32px; font-weight: bold; margin: 20px 0; color: #fff; }
+        
+        #checkout-btn {
+            background-color: #d4af37; color: #000; padding: 15px 30px; font-size: 16px;
+            border: none; cursor: pointer; font-weight: bold; width: 100%; border-radius: 5px;
+            transition: all 0.2s ease;
+        }
+        #checkout-btn:hover { transform: translateY(-2px); background-color: #fff; }
+        #checkout-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        @media (max-width: 480px) {
+            .checkout-card { width: 90%; padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="checkout-card">
+        <div class="product-image">💎</div>
+        <h2>Premium Membership</h2>
+        <p style="color:#aaa; margin-bottom:20px;">Unlock the Winery & Clothing Collection</p>
+        <div class="price">$81.00</div>
+        
+        <button id="checkout-btn">Secure Checkout</button>
+        <p id="error-message" style="color: #ff5555; margin-top: 10px; font-size: 14px; display: none;"></p>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const STRIPE_KEY = 'pk_test_51SkRSLF4PldbqlsvtOZyPz8QULNT0fZKJoIqQxCWkjW7wFcRiDhUONHKQWVv2MM9cm96vUEvr0R3yn8JTSq1pbQb008x2ORLLn';
+        const API_ENDPOINT = '/api/create-checkout-session';
+
+        // --- SETUP ---
+        const stripe = Stripe(STRIPE_KEY);
+        const checkoutButton = document.getElementById('checkout-btn');
+        const errorMsg = document.getElementById('error-message');
+
+        checkoutButton.addEventListener('click', async () => {
+            // 1. Visual Feedback
+            checkoutButton.innerText = "Processing...";
+            checkoutButton.disabled = true;
+            errorMsg.style.display = 'none';
+
+            // 2. Prepare Data
+            const membershipItem = {
+                cart: [{
+                    id: "membership-premium",
+                    quantity: 1
+                }]
+            };
+
+            try {
+                // 3. Send to Server
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(membershipItem)
+                });
+
+                const session = await response.json();
+
+                if (session.url) {
+                    window.location.href = session.url; // Redirect to Stripe
+                } else {
+                    throw new Error("Payment system is currently busy.");
+                }
+
+            } catch (error) {
+                console.error('Checkout Error:', error);
+                errorMsg.innerText = "Connection failed. Please try again.";
+                errorMsg.style.display = 'block';
+                checkoutButton.innerText = "Secure Checkout";
+                checkoutButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>African’s Tenacity Trounce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="black.css">
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+<script src="/black.js"></script> 
+</head>
+<body>
+
+   <nav class="navbar">
+    <a href="black.html" class="brand-name"><span class="gold-text">African’s Tenacity Trounce.</span></a>
+    <div class="hamburger" id="mobile-menu-btn">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </div>
+    <ul class="nav-links" id="nav-links-container">
+        <li><a href="black.html">Home</a></li>
+        <li class="dropdown-parent dropdown">
+            <a href="javascript:void(0)" class="drop-trigger">About ▾</a>
+            <ul class="dropdown-content">
+                <li><a href="black.html#motivation">Mentality & Motivation</a></li>
+                <li><a href="winery-page.html">Winery Collection</a></li>
+                <li><a href="Clothing-page.html">Clothing & Attire</a></li>
+                <li><a href="#" id="hmmm-trigger" onclick="toggleHmmm(event)">
+        Hmmm <span id="hmmm-count" class="badge">0</span> </a></li>
+            </ul>
+        </li>
+        <li><a href="cart.html" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+   <header id="home" class="hero-section">
+    <img src="/images/hero-bg.jpeg" alt="Benin Essence" class="hero-bg-image">
+    
+    <div class="hero-overlay"></div>
+
+  
+</header>
+
+    
+
+    <section id="motivation" class="section-motivation">
+        <div class="section-header">
+            <h2>Voices of <span class="gold-text">Resilience</span></h2>
+            <p>Wisdom from the history of tenacity.</p>
+        </div>
+        <div class="quote-container">
+            <div class="quote-card"><p>"I am not African because I was born in Africa but because Africa was born in me."</p><h4>— Kwame Nkrumah</h4></div>
+            <div class="quote-card"><p>"Our patience achieves more than our force."</p><h4>— Edmund Burke</h4></div>
+        </div>
+        <a href="motivation-page.html" class="learn-more-btn">Explore The Mindset →</a>
+    </section>
+
+    <section id="winery" class="section-winery">
+        <div class="section-header">
+            <h2>The <span class="gold-text">Reserve</span></h2>
+            <p>Curated flavors for the discerning palate.</p>
+        </div>
+        <div class="carousel-container">
+            <div class="carousel-track" id="wine-container"></div>
+        </div>
+        <a href="winery-page.html" class="learn-more-btn">View Full Cellar →</a>
+    </section>
+
+
+    
+
+    <section id="clothing" class="section-clothing">
+        <div class="section-header">
+            <h2>Sartorial <span class="gold-text">Elegance</span></h2>
+            <p>From Italian cuts to the Royal Benin Court.</p>
+        </div>
+        <div class="carousel-container">
+            <div class="carousel-track" id="suit-container"></div>
+        </div>
+        <a href="Clothing-page.html" class="learn-more-btn">View Collection →</a>
+        
+    </section>
+
+
+    <div id="hmmm-sidebar" class="sidebar-panel">
+    <div class="sidebar-header">
+        <h2>Items you're thinking about...</h2>
+        <button class="close-btn" onclick="toggleHmmm(event)">&times;</button>
+    </div>
+    
+    <div id="hmmm-list-container" class="sidebar-content">
+        <p class="empty-msg">You haven't said "Hmmm" to anything yet.</p>
+    </div>
+</div>
+
+<div id="sidebar-overlay" onclick="closeAllSidebars()"></div>
+
+     <div class="container">
+        
+        <div class="contact-info">
+            <h2 class="section-title">Send us a <br><span class="gold-text">Message</span></h2>
+           
+            <div class="direct-contact">
+                <div class="dc-item">
+                    <div class="contact-item">
+    <i class="fas fa-envelope"></i> <span class="label">Email:</span>
+    <a href="mailto:seerees2z@gmail.com?subject=Inquiry from Website" class="email-link">
+        seerees2z@gmail.com
+    </a>
+    </div>
+                </div>
+                <div class="dc-item">
+                    <span class="label">Location</span>
+                    <span class="value">Benin City • London • New York</span>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <footer class="site-footer">
+        <div class="footer-bottom"><p>&copy; 2026 Iwinosa's Emporium.</p></div>
+    </footer>
+    
+    <div id="toast">Item added to cart!</div>
+    
+
+
+    <script>
+        // Trigger the Homepage Logic
+        initHomepage();
+    </script>
+    
+    <a href="https://wa.me/2349053243444?text=Hello,%20I%20am%20interested%20in%20your%20collection." 
+   class="whatsapp-float" 
+   target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+</body>
+</html>

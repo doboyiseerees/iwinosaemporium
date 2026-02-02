@@ -99,41 +99,52 @@ p {
     padding: 10px 0; /* Increases hover area so menu doesn't disappear */
 }
 
+/* 1. Hide the menu by default */
 .dropdown-content {
-    display: none; /* Hidden by default */
+    display: none; /* Hidden */
     position: absolute;
-    top: 100%; /* Push it below the parent */
-    left: 50%;
-    transform: translateX(-50%); /* Center it */
-    background-color: #1c1c1e; /* Card Color */
-    min-width: 220px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    border-radius: 8px;
-    padding: 10px 0;
-    list-style: none;
+    background-color: #1a1a1a; /* Dark background */
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+    z-index: 1000;
+    top: 100%; /* Push it right below the button */
+    left: 0;
     border: 1px solid #333;
 }
 
-/* Show dropdown on hover */
-.dropdown-parent:hover .dropdown-content {
-    display: block;
-    animation: fadeIn 0.3s ease; /* Smooth entrance */
+/* 2. The class JavaScript will add to SHOW the menu */
+.dropdown-content.show {
+    display: block; /* Visible */
 }
+
+/* 3. Style the links inside */
+.dropdown-content li a {
+    color: #fff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #333;
+}
+
+.dropdown-content li a:hover {
+    background-color: #333;
+    color: #d4af37;
+}
+
+/* OPTIONAL: Remove the old ":hover" rule if it exists. 
+   Look for: .dropdown:hover .dropdown-content { display: block; }
+   and DELETE it so clicks are the only way to open it. 
+*/
+
 
 .dropdown-content li {
     padding: 0;
 }
 
-.dropdown-content a {
-    display: block;
-    padding: 12px 20px;
-    color: #e1e1e1;
-}
 
-.dropdown-content a:hover {
-    background-color: #333;
-    color: var(--color-gold);
-}
+
+
 
 /* HAMBURGER ICON (Hidden on Desktop) */
 .hamburger {
@@ -296,7 +307,7 @@ section {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://source.unsplash.com/random/1920x1080/?luxury,black');
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
     background-size: cover;
 }
 
@@ -517,52 +528,160 @@ section {
     text-align: center;
     background-color: #0d0d0d;
 }
-
 .catalog-section {
-    padding: 0 5% 100px; /* 5% side padding for breathing room */
+    padding: 60px 5%;
+    background-color: #000000; /* Soft background to make cards pop */
 }
 
-/* THE GRID SYSTEM */
+/* --- 2-COLUMN GRID LAYOUT --- */
+
+/* The Container: Forces 2 columns side-by-side */
 .product-grid {
     display: grid;
-    /* This magic line creates responsive columns automatically */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 40px;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 15px; /* Space between cards */
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* THE CARD DESIGN */
+/* The Card: Compacted to fit 2 rows vertically */
 .catalog-card {
-    background-color: var(--color-card);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #222;
-    
-}
-
-/* --- UNIVERSAL CAROUSEL IMAGE FIX --- */
-
-/* 1. The Card Container (The Frame) */
-.card {
-    /* Existing styles... */
+    background: #111; /* Dark card background */
+    border: 1px solid #333;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Cuts off anything that spills out */
-    border-radius: 10px; /* Optional: Rounded corners */
-    background-color: #1a1a1a; /* Background color if image loads slow */
+    justify-content: space-between;
+    height: 100%; /* Fill the grid cell */
+    border-radius: 4px; /* Slight rounding */
+    overflow: hidden;
 }
+
+/* Image Container: Limits height so cards aren't too tall */
+.catalog-card .card-image-container {
+    height: 180px; /* Reduced from 220px to fit more rows */
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.catalog-card .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image fills box without stretching */
+    transition: transform 0.5s ease;
+}
+
+/* Info Section: Compact spacing */
+.catalog-card .card-info {
+    padding: 10px; /* Reduced padding */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* Typography: Adjusted for smaller cards */
+.catalog-card h3 {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #fff;
+    white-space: nowrap; /* Prevents title from wrapping too much */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.catalog-card .card-summary {
+    font-size: 0.8rem;
+    color: #aaa;
+    display: none; /* Hide description on grid view to save space (Optional) */
+}
+
+/* Footer & Price */
+.catalog-card .card-footer {
+    margin-top: auto; /* Pushes price/buttons to bottom */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.catalog-card .price {
+    font-size: 1.1rem;
+    color: #d4af37;
+    font-weight: bold;
+}
+
+/* --- BUTTONS IN GRID --- */
+.card-buttons {
+    display: flex;
+    gap: 5px; /* Tighter gap */
+    margin-top: 5px;
+}
+
+
+
+
+
+.card-buttons button {
+    padding: 8px 0; /* Taller touch targets */
+    font-size: 0.85rem;
+}
+
+
+
+
+
+
+
+
+.btn-gold {
+    background-color: #d4af37;
+    color: #000;
+    border: none;
+    font-weight: bold;
+}
+
+.hmmm-btn {
+    border: 1px solid #555;
+    color: #d4af37;
+    background: transparent;
+    font-style: italic;
+    font-family: serif;
+}
+
+/* --- RESPONSIVENESS --- */
+
+/* On very large screens (Desktop), maybe show 4 columns? */
+@media (min-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr); /* 4 items per row on PC */
+    }
+    .catalog-card .card-image-container {
+        height: 250px; /* Taller images on desktop */
+    }
+}
+
+/* On Tablets, show 3 columns */
+@media (min-width: 600px) and (max-width: 1023px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+
 
 /* 2. The Image Wrapper (Optional but recommended) */
 /* If your images are inside a div like <div class="card-image">...</div> */
 .card-image-container {
     width: 100%;
-    height: 350px; /* SET A FIXED HEIGHT. This is crucial for alignment. */
+    height: 300px; /* SET A FIXED HEIGHT. This is crucial for alignment. */
     overflow: hidden;
     position: relative;
 }
 
 /* 3. The Image Itself (The Magic) */
-.card img {
+.card-img {
     width: 100%;       /* Force width to fill container */
     height: 350px;     /* Force height to match container */
     
@@ -588,12 +707,12 @@ section {
 }
 
 .card-image {
-    height: 250px;
+    height: 300px; /* Taller, more elegant image area */
     width: 100%;
-    background-color: #333;
-    /* In future, use: background-image: url(...); background-size: cover; */
-    
+    background-size: cover;
+    background-position: center;
 }
+
 
 .card-info {
     padding: 20px;
@@ -754,18 +873,15 @@ section {
 }
 
 .cart-container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #1c1c1e;
-    padding: 40px;
-    border-radius: 12px;
-    border: 1px solid #333;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
 }
 
 .cart-item {
     display: flex;
     align-items: center;
-    padding: 20px 0;
+    padding: 15px 0;
     border-bottom: 1px solid #333;
 }
 
@@ -775,7 +891,7 @@ section {
     background-color: #333;
     background-size: cover;
     background-position: center;
-    border-radius: 8px;
+    border-radius: 6px;
     margin-right: 20px;
 }
 
@@ -784,8 +900,8 @@ section {
 }
 
 .cart-details h4 {
-    color: var(--color-text);
-    margin-bottom: 5px;
+    margin: 0 0 5px 0;
+    font-size: 1rem;
 }
 
 .remove-btn {
@@ -816,20 +932,20 @@ section {
 }
 
 .checkout-btn {
-    background-color: var(--color-gold);
+    width: 100%;
+    padding: 15px;
+    background: #d4af37; /* Gold */
     color: #000;
     border: none;
-    padding: 15px 40px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 30px;
+    font-weight: bold;
+    margin-top: 20px;
     cursor: pointer;
-    transition: transform 0.2s;
+    border-radius: 4px;
 }
 
 .checkout-btn:hover {
     transform: scale(1.05);
-    background-color: #fff;
+    background: #c5a028;
 }
 
 .continue-link {
@@ -855,7 +971,7 @@ section {
     width: 100%;
     background: linear-gradient(145deg, #161618, #0f0f0f);
     border: 1px solid #222;
-    border-radius: 20px;
+    border-radius: 2px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
@@ -1467,3 +1583,581 @@ textarea.styled-input {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
+
+
+
+/* Animation Stage */
+.animation-stage {
+    position: relative;
+    height: 100vh; /* Full screen */
+    overflow: hidden;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* The Bar Surface */
+.bar-surface {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30%; /* Bottom 30% looks like a table */
+    background: linear-gradient(to bottom, #2a2a2a, #111);
+    border-top: 1px solid #444;
+}
+
+/* The Glass */
+#sliding-glass {
+    width: 150px;
+    /* Start off-screen to the left */
+    transform: translateX(-100vw); 
+    z-index: 2;
+}
+
+.glass-text {
+    position: absolute;
+    top: 30%;
+    color: #d4af37;
+    font-size: 3rem;
+    opacity: 0; /* Starts invisible */
+    z-index: 1;
+}
+
+/* Hide the collection initially */
+.collection-hidden {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+
+
+
+
+
+
+
+
+/* --- HMMM SIDEBAR STYLES --- */
+.sidebar-panel {
+    position: fixed;
+    top: 0;
+    right: -450px; /* Hidden off-screen */
+    width: 400px;
+    height: 100vh;
+    background-color: #0a0a0a; /* Dark Luxury Background */
+    box-shadow: -5px 0 30px rgba(0,0,0,0.8);
+    z-index: 1000;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Smooth slide */
+    padding: 30px;
+    border-left: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-panel.open {
+    right: 0; /* Slide in */
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar-header h2 {
+    color: #d4af37;
+    font-family: 'Times New Roman', serif;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* Sidebar Content Items */
+.hmmm-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #222;
+    padding-bottom: 15px;
+}
+
+.hmmm-img {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.hmmm-details {
+    flex: 1;
+}
+
+.hmmm-details h4 {
+    color: #fff;
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+}
+
+.hmmm-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-move-cart {
+    background: #d4af37;
+    color: #000;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.btn-remove-hmmm {
+    background: transparent;
+    border: 1px solid #444;
+    color: #888;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+/* OVERLAY (Dim background when open) */
+#sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    backdrop-filter: blur(2px);
+}
+
+#sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- UPDATE PRODUCT CARD BUTTONS --- */
+.card-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.hmmm-btn {
+    background: transparent;
+    border: 1px solid #d4af37;
+    color: #d4af37;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: 'Times New Roman', serif;
+    font-style: italic;
+    transition: all 0.3s;
+}
+
+.hmmm-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 500px) {
+    .sidebar-panel { width: 85%; }
+}
+
+
+
+
+/* --- HERO SECTION LAYOUT --- */
+.hero-section {
+    position: relative; /* Anchors the absolute elements inside */
+    height: 100vh;      /* Full viewport height */
+    width: 100%;
+    overflow: hidden;   /* Prevents scrollbars during animation */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000; /* Fallback color */
+}
+
+/* --- THE IMAGE ANIMATION --- */
+.hero-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers screen without stretching */
+    z-index: 1;        /* Sits at the back */
+    
+    /* Animation Settings */
+    opacity: 0;        /* Start invisible */
+    transform: translateY(-50px); /* Start slightly moved UP */
+    animation: fadeInTop 1.5s ease-out forwards; /* Run animation */
+    animation-delay: 0.2s; /* Wait a tiny bit before starting */
+}
+
+/* --- OPTIONAL DARK OVERLAY --- */
+/* This darkens the image so white text pops */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* 60% Black tint */
+    z-index: 2; /* Sits on top of image, below text */
+}
+
+/* --- THE TEXT --- */
+.hero-text-container {
+    position: relative;
+    z-index: 3; /* Sits on top of everything */
+    text-align: center;
+    padding: 0 20px;
+}
+
+/* --- THE KEYFRAMES --- */
+@keyframes fadeInTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px); /* Starts higher up */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);     /* Lands in natural position */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   PRODUCT DETAIL PAGE
+   ========================================= */
+.detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 100vh;
+    padding-top: 80px; /* Space for navbar */
+    background-color: #111; /* Deep background */
+    color: #fff;
+}
+
+/* LEFT: Magnified Image Area */
+.detail-image-wrapper {
+    flex: 1;
+    min-width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 35px;
+    background-color: #000; /* Darker contrast for image */
+}
+
+.magnified-img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    object-fit: contain; /* Keeps aspect ratio */
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+    transition: transform 0.3s ease;
+}
+
+.magnified-img:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* RIGHT: Info Area */
+.detail-info-wrapper {
+    flex: 1;
+    min-width: 350px;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-title {
+    font-size: 3rem;
+    font-family: 'Playfair Display', serif; /* Elegant font */
+    margin-bottom: 10px;
+    color: #d4af37; /* Gold */
+}
+
+.product-price {
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+/* ACCORDION STYLES */
+.accordion-container {
+    border-top: 1px solid #333;
+}
+
+.accordion-item {
+    border-bottom: 1px solid #333;
+}
+
+.accordion-header {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 20px 0;
+    text-align: left;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.accordion-header:hover {
+    color: #d4af37;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    padding-right: 20px;
+}
+
+.accordion-content p {
+    color: #aaa;
+    line-height: 1.6;
+    padding-bottom: 20px;
+}
+
+/* Utility to open accordion */
+.accordion-item.active .accordion-content {
+    max-height: 200px; /* Adjust based on text length */
+}
+
+.accordion-item.active .icon {
+    transform: rotate(45deg); /* Turns + into x */
+}
+
+
+/* =========================================
+   RECENTLY VIEWED SECTION
+   ========================================= */
+.recent-section-wrapper {
+    padding: 60px 40px;
+    background-color: #1a1a1a; /* Slightly lighter than the black background */
+    border-top: 1px solid #333;
+}
+
+.recent-title {
+    color: #d4af37; /* Gold */
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    border-left: 3px solid #d4af37;
+    padding-left: 15px;
+}
+
+.recent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Smaller cards */
+    gap: 20px;
+}
+
+.recent-card {
+    background: #000;
+    border: 1px solid #333;
+    transition: transform 0.3s ease;
+}
+
+.recent-card:hover {
+    transform: translateY(-5px);
+    border-color: #d4af37;
+}
+
+
+
+
+/* =========================================
+   REVIEWS SECTION
+   ========================================= */
+.reviews-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    color: #fff;
+}
+
+.section-header {
+    border-bottom: 2px solid #333;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Review List */
+.reviews-list {
+    margin-bottom: 50px;
+}
+
+.review-card {
+    background: #111;
+    border: 1px solid #333;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    color: #d4af37;
+}
+
+.review-date {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.review-stars {
+    color: #f1c40f; /* Yellow/Gold for stars */
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.review-text {
+    color: #ccc;
+    line-height: 1.5;
+}
+
+/* Review Form */
+.review-form {
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.review-form h4 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.review-form input, 
+.review-form select, 
+.review-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: #000;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.review-form input:focus, 
+.review-form textarea:focus {
+    outline: none;
+    border-color: #d4af37;
+}
+
+/* =========================================
+   CONTACT EMAIL STYLING
+   ========================================= */
+
+.email-link {
+    color: #d4af37; /* Gold color */
+    text-decoration: none; /* Removes the standard underline */
+    font-weight: bold;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.email-link:hover {
+    color: #fff; /* Turns white when you hover over it */
+    text-decoration: underline; /* Adds a subtle underline on hover */
+    
+}
+
+
+
+
+/* =========================================
+   WHATSAPP FLOAT STYLES
+   ========================================= */
+.whatsapp-float {
+    position: fixed; /* Freezes it in one spot on the screen */
+    width: 60px;
+    height: 60px;
+    bottom: 40px; /* Distance from bottom */
+    right: 40px;  /* Distance from right */
+    background-color: #25d366; /* WhatsApp Green */
+    color: #FFF;
+    border-radius: 50px; /* Makes it a perfect circle */
+    text-align: center;
+    font-size: 30px; /* Icon size */
+    box-shadow: 2px 2px 3px #111; /* Drop shadow for depth */
+    z-index: 1000; /* Ensures it sits on top of everything else */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    background-color: #128c7e; /* Darker green when hovering */
+    transform: scale(1.1); /* Slightly grows larger */
+    box-shadow: 0 0 15px rgba(37, 211, 102, 0.6); /* Glowing effect */
+}
+
+/* Mobile Adjustment: Make it slightly smaller on phones */
+@media screen and (max-width: 768px) {
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 25px;
+    }
+}
+
+
+
+

@@ -1,3 +1,7 @@
+// seed.js
+const mongoose = require('mongoose');
+const Product = require('./models/product');
+
 const inventory = [
     // --- WINES ---
     {
@@ -179,7 +183,7 @@ const inventory = [
         category: "motivation",
         name: "Dr. Osahon Enabulele",
         role: "President, World Medical Association (2022-2023)",
-        image: "/images/drOsahon.jpg",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBOrFVTYGM4CE4US3tTOIozgIRldMoS7DPzQ&s",
         summary: "A Great Benin Alumnus on the World Stage.",
         quote: "We must build systems that are resilient, just as the African spirit has proven to be time and time again.",
         history: "A proud graduate of the University of Benin (UNIBEN). He rose through the ranks of the Nigerian Medical Association to become the first Nigerian to head the World Medical Association.",
@@ -373,3 +377,26 @@ const inventory = [
 // ... (End of your huge inventory array)
 
 const products = inventory;
+
+ //--- THE UPLOAD LOGIC ---
+ 
+mongoose.connect('mongodb+srv://iwinosa:Superkaioken10@tenacity.30skxyv.mongodb.net/?appName=Tenacity')
+    .then(async () => {
+        console.log('Connected to MongoDB. Deleting old data...');
+        
+        // 1. Clear existing products to avoid duplicates
+        await Product.deleteMany({});
+        console.log('Old data cleared.');
+
+       // Filter out items that don't have a price (like motivation quotes)
+const sellableProducts = inventory.filter(item => item.price !== undefined);
+
+console.log(`Skipping ${inventory.length - sellableProducts.length} motivation items...`);
+await Product.insertMany(sellableProducts);
+        // 3. Close connection
+        mongoose.connection.close();
+    })
+    .catch(err => {
+        console.log(err);
+        mongoose.connection.close();
+    });

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful | African Tenacity</title>
+    <style>
+        body { 
+            background: #111; color: #fff; font-family: sans-serif; 
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; height: 100vh; text-align: center;
+        }
+        h1 { color: #d4af37; font-size: 3rem; margin-bottom: 20px; }
+        p { font-size: 1.2rem; margin-bottom: 30px; color: #ccc; }
+        .btn { 
+            padding: 15px 30px; background: #d4af37; color: #000; 
+            text-decoration: none; font-weight: bold; border-radius: 5px; 
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Payment Successful!</h1>
+    <p>Thank you for your purchase. Your order is being processed.</p>
+    <a href="index.html" class="btn">Return Home</a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Clear the cart from memory
+        localStorage.removeItem('cart');
+        
+        // 2. (Optional) Update the little red bubble in the nav
+        // If you are reusing your navbar on this page
+        const countSpan = document.getElementById('cart-count');
+        if (countSpan) countSpan.innerText = '0';
+        
+        console.log("Purchase complete. Cart cleared.");
+    });
+</script>
+
+</body>
+</html>
